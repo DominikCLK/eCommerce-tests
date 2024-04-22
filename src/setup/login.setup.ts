@@ -8,7 +8,6 @@ setup('Login and save session', async ({ loginPage, page }) => {
 
   // Act
   await loginPage.goto();
-  const welcomePage = await loginPage.login(testUser);
 
   //Assert
   await expect(page).toHaveURL(loginPage.url);
