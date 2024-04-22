@@ -12,6 +12,10 @@ export class BasePage {
     return await this.page.title();
   }
 
+  async getTitle(): Promise<string> {
+    return await this.page.title();
+  }
+
   async verifyCurrentUrl(): Promise<void> {
     const currentUrl = this.page.url();
 

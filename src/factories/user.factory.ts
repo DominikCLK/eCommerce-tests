@@ -13,13 +13,7 @@ export function prepareRandomUserData(): RegisterUserModel {
     userState: fakerPL.location.state(),
     userPhone: faker.phone.number(),
     userEmail: faker.internet.email(),
-    userPassword: faker.internet.password({ length: 20 }),
+    userPassword: faker.internet.password({ length: 20, prefix: '!"#123' }),
   };
-
-  registerUserData.userEmail = faker.internet.email({
-    firstName: registerUserData.userFirstName,
-    lastName: registerUserData.userLastName,
-  });
-
   return registerUserData;
 }
