@@ -39,7 +39,7 @@ export default defineConfig({
     },
     {
       name: 'chromium-logged',
-      grep: /@registered/,
+      grep: /@logged/,
       dependencies: ['setup'],
       use: {
         storageState: STORAGE_STATE,

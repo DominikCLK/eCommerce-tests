@@ -10,6 +10,7 @@ export class LoginPage extends BasePage {
   loginHeading = this.page.getByRole('heading', { name: 'Login' });
   registerLink = this.page.locator('[data-test="register-link"]');
   forgotPasswordLink = this.page.locator('[data-test="forgot-password-link"]');
+  button = this.page.getByTestId('article-title');
 
   constructor(page: Page) {
     super(page);
