@@ -3,7 +3,7 @@ import { prepareRandomUserData } from '@_src/factories/user.factory';
 import { expect, test as setup } from '@_src/fixtures/merge.fixture';
 import { RegisterUserModel } from '@_src/models/user.model';
 
-setup.describe('Register and save session', () => {
+setup.describe('Register, login to app and save session', () => {
   let registerUserData: RegisterUserModel;
 
   setup.beforeEach(async ({ registerPage }) => {
