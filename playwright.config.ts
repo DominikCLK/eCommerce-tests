@@ -17,11 +17,19 @@ export default defineConfig({
   fullyParallel: true,
   retries: 0,
   workers: undefined,
-  reporter: 'html',
+
+  //Reporters
+  reporter: [
+    ['html'],
+    ['github'],
+    ['json', { outputFile: './playwright-report/results.json' }],
+    ['junit', { outputFile: './playwright-report/results.xml' }],
+  ],
+
   use: {
-    baseURL: BASE_URL,
+    baseURL: process.env.BASE_URL,
     actionTimeout: 0,
-    trace: 'on',
+    trace: 'retain-on-failure',
     video: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
