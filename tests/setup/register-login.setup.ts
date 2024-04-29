@@ -11,7 +11,7 @@ setup.describe('Register, login to app and save session', () => {
     await registerPage.goto();
   });
 
-  setup('Register new user', async ({ registerPage, loginPage, page }) => {
+  setup('Register new user @setup', async ({ registerPage, loginPage, page }) => {
     // Arrange
     const expectedWelcomeTitle = 'Practice Software Testing - Toolshop - v5.0';
     const loggedHeading = 'My account';

@@ -10,7 +10,11 @@
     "test": "npx playwright test",
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test:setup:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL npx playwright test --grep /@setup/",
+    "test:all:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL npx playwright test --grep /@logged/"
+
+
   },
   "keywords": [],
   "author": "",
