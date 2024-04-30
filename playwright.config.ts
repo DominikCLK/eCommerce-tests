@@ -27,7 +27,7 @@ export default defineConfig({
   ],
 
   use: {
-    baseURL: process.env.BASE_URL,
+    baseURL: BASE_URL,
     actionTimeout: 0,
     trace: 'retain-on-failure',
     video: 'retain-on-failure',
@@ -53,6 +53,10 @@ export default defineConfig({
         storageState: STORAGE_STATE,
         ...devices['Desktop Chrome'],
       },
+    },
+    {
+      name: 'api-integration',
+      grep: /@API-integration/,
     },
   ],
 });
