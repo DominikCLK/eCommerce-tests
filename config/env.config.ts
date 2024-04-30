@@ -13,4 +13,3 @@ function requireEnvVariable(envVariable: string): string {
 
 export const BASE_URL = requireEnvVariable('BASE_URL');
 export const API_URL = requireEnvVariable('API_URL');
-

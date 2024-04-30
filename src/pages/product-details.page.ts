@@ -1,7 +1,6 @@
+import { NavbarComponent } from '@_src/components/navbar.component';
 import { BasePage } from '@_src/pages/base.page';
 import { Page } from '@playwright/test';
-import { NavbarComponent } from '@_src/components/navbar.component';
-
 
 export class ProductDetails extends BasePage {
   productName = this.page.locator('[data-test="product-name"]');
