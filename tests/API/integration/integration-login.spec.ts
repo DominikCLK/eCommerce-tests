@@ -1,3 +1,4 @@
+import { APIEndpoints } from '@_src/enums/endpoints.dicts';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import userDataJsonObject from '@_src/test-data/user.data.json';
 import {
@@ -5,9 +6,6 @@ import {
   DEFAULT_USER_EMAIL,
   DEFAULT_USER_PASSWORD,
 } from 'config/env.config';
-
-const LOGIN_ENDPOINT = '/users/login';
-const USER_ENDPOINT = '/users/me';
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
@@ -18,12 +16,15 @@ test.describe('Login to portal and verify user @API-integration', () => {
   test('POST login to portal with correct credentials', async ({ request }) => {
     // Act
     try {
-      const loginResponse = await request.post(buildUrl(LOGIN_ENDPOINT), {
-        data: {
-          email: DEFAULT_USER_EMAIL,
-          password: DEFAULT_USER_PASSWORD,
+      const loginResponse = await request.post(
+        buildUrl(APIEndpoints.LOGIN_ENDPOINT),
+        {
+          data: {
+            email: DEFAULT_USER_EMAIL,
+            password: DEFAULT_USER_PASSWORD,
+          },
         },
-      });
+      );
 
       const loginResponseJson = await loginResponse.json();
       const tokenType = loginResponseJson.token_type;
@@ -41,11 +42,14 @@ test.describe('Login to portal and verify user @API-integration', () => {
   test('GET verify user data and access token', async ({ request }) => {
     // Act
     try {
-      const userResponse = await request.get(buildUrl(USER_ENDPOINT), {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
+      const userResponse = await request.get(
+        buildUrl(APIEndpoints.USER_ENDPOINT),
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
         },
-      });
+      );
       const userResponseJson = await userResponse.json();
 
       const {

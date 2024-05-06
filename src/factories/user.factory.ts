@@ -6,12 +6,12 @@ export function prepareRandomUserData(): RegisterUserModel {
   const registerUserData: RegisterUserModel = {
     userFirstName: faker.person.firstName().replace(/[^A-Za-z]/g, ''),
     userLastName: faker.person.lastName().replace(/[^A-Za-z]/g, ''),
-    userBirthDate: '',
+    userBirthDate: '2000-02-21',
     userAddress: faker.location.streetAddress(),
     userPostcode: faker.location.zipCode('##-###'),
     userCity: faker.location.city(),
     userState: fakerPL.location.state(),
-    userPhone: faker.phone.number(),
+    userPhone: "700800900",
     userEmail: faker.internet.email(),
     userPassword: faker.internet.password({ length: 20, prefix: '!"#123' }),
   };
