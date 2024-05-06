@@ -1,10 +1,11 @@
+import { APIEndpoints } from '@_src/enums/endpoints.dicts';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { API_URL } from 'config/env.config';
 
+const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
+
 test.describe.configure({ mode: 'serial' });
 test.describe('Get product details, add one product to basket then remove @API-integration', () => {
-  const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
-  const createBasketUrl = `${API_URL}/carts`;
   const expectedResponseResult = 'item added or updated';
 
   let getProductResponse;
@@ -13,7 +14,9 @@ test.describe('Get product details, add one product to basket then remove @API-i
 
   test('GET one product details', async ({ request }) => {
     // Arrange
-    const productResponse = await request.get(productsUrl);
+    const productResponse = await request.get(
+      buildUrl(APIEndpoints.PRODUCTS_ENDPOINT),
+    );
     const responseProductJson = await productResponse.json();
     productId = responseProductJson.data[0].id;
 
@@ -25,7 +28,9 @@ test.describe('Get product details, add one product to basket then remove @API-i
 
   test('POST create basket id', async ({ request }) => {
     // Act
-    const basketResponse = await request.post(createBasketUrl);
+    const basketResponse = await request.post(
+      buildUrl(APIEndpoints.BASKET_ENDPOINT),
+    );
     const responseBasketJson = await basketResponse.json();
     basketId = responseBasketJson.id;
 
@@ -37,9 +42,9 @@ test.describe('Get product details, add one product to basket then remove @API-i
   });
 
   test('POST add product to basket', async ({ request }) => {
-    // Arrange
+    // Act
     const addProductResponse = await request.post(
-      `${createBasketUrl}/${basketId}`,
+      `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}`,
       {
         data: {
           product_id: productId,
@@ -48,7 +53,6 @@ test.describe('Get product details, add one product to basket then remove @API-i
       },
     );
 
-    // Act
     const addProductResponseJson = await addProductResponse.json();
     const responseMessage = addProductResponseJson.result;
 
@@ -59,7 +63,9 @@ test.describe('Get product details, add one product to basket then remove @API-i
 
   test('GET product in basket', async ({ request }) => {
     // Act
-    getProductResponse = await request.get(`${createBasketUrl}/${basketId}`);
+    getProductResponse = await request.get(
+      `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}`,
+    );
 
     const getProductResponseJson = await getProductResponse.json();
     const productIdInBasket = getProductResponseJson.cart_items[0].product.id;
@@ -72,7 +78,7 @@ test.describe('Get product details, add one product to basket then remove @API-i
   test('DELETE remove product from basket', async ({ request }) => {
     // Act
     const removeProductResponse = await request.delete(
-      `${createBasketUrl}/${basketId}/product/${productId}`,
+      `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}/product/${productId}`,
     );
 
     // Assert
@@ -81,7 +87,9 @@ test.describe('Get product details, add one product to basket then remove @API-i
 
   test('GET verify empty basket', async ({ request }) => {
     // Act
-    getProductResponse = await request.get(`${createBasketUrl}/${basketId}`);
+    getProductResponse = await request.get(
+      `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}`,
+    );
     const emptyBasketJson = await getProductResponse.json();
     const cartItems = emptyBasketJson.cart_items;
 

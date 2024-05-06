@@ -54,9 +54,5 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
       },
     },
-    // {
-    //   name: 'api-integration',
-    //   grep: /@API-integration/,
-    // },
   ],
 });

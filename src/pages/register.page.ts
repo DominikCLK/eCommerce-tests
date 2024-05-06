@@ -26,13 +26,13 @@ export class RegisterPage extends BasePage {
   async register(registerUserData: RegisterUserModel): Promise<LoginPage> {
     await this.firstNameInput.fill(registerUserData.userFirstName);
     await this.lastNameInput.fill(registerUserData.userLastName);
-    await this.birthDateInput.fill('2000-02-21');
+    await this.birthDateInput.fill(registerUserData.userBirthDate);
     await this.addressInput.fill(registerUserData.userAddress);
     await this.postCodeInput.fill(registerUserData.userPostcode);
     await this.cityInput.fill(registerUserData.userCity);
     await this.stateInput.fill(registerUserData.userState);
     await this.countrySelect.selectOption('PL');
-    await this.phoneInput.fill('123456789');
+    await this.phoneInput.fill(registerUserData.userPhone);
     await this.emailInput.fill(registerUserData.userEmail);
     await this.passwordInput.fill(registerUserData.userPassword);
 
