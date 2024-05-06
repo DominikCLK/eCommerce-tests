@@ -11,8 +11,9 @@
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
     "test:setup:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL npx playwright test --grep /@setup/",
-    "test:all:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL npx playwright test --grep /@logged/",
-    "test:api:integration:workflow": "npx playwright test --grep /@API-integration/"
+    "test:api:integration:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL DEFAULT_USER_EMAIL=$DEFAULT_USER_EMAIL DEFAULT_USER_PASSWORD=$DEFAULT_USER_PASSWORD npx playwright test --grep /@API-integration/",
+    "test:ui:smoke:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL npx playwright test --grep /@smoke-UI/",
+    "test:ui:e2e:workflow": "BASE_URL=$BASE_URL API_URL=$API_URL DEFAULT_USER_EMAIL=$DEFAULT_USER_EMAIL DEFAULT_USER_PASSWORD=$DEFAULT_USER_PASSWORD npx playwright test --grep /@logged/"
   },
   "keywords": [],
   "author": "",
