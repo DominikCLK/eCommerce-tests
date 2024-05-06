@@ -1,0 +1,10 @@
+{
+  "userDefaultAccountData": {
+    "jsonUserFirstName": "Jack",
+    "jsonLastName": "Howe",
+    "jsonAddress": "Test street 654",
+    "jsonCity": "Frankfurt",
+    "jsonCountry": "Germany",
+    "jsonDob": "1980-03-03"
+  }
+}

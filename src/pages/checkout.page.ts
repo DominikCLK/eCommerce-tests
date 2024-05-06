@@ -3,7 +3,7 @@ import { Locator, Page } from '@playwright/test';
 
 export class CheckoutPage extends BasePage {
   checkoutItemName(itemName: string): Locator {
-    return this.page.getByText(`${itemName}`);
+    return this.page.getByText(`${itemName}`, { exact: true });
   }
 
   proceedButton(stemNumber: string): Locator {

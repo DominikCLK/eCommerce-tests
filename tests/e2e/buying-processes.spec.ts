@@ -38,7 +38,7 @@ test.describe('Verify buying processes - products from home page', () => {
     await productDetails.navbar.basket.click();
 
     // Assert
-    await expect(checkoutPage.checkoutItemName(productName)).toBeVisible();
+    await expect.soft(checkoutPage.checkoutItemName(productName)).toBeVisible();
 
     // Act
     await checkoutPage.proceedButton('1').click();
