@@ -12,4 +12,8 @@ function requireEnvVariable(envVariable: string): string {
 }
 
 export const BASE_URL = requireEnvVariable('BASE_URL');
-export const API_URL = requireEnvVariable('API_URL');
+export const API_URL = requireEnvVariable('API_URl');
+export const DEFAULT_USER_EMAIL = requireEnvVariable('DEFAULT_USER_EMAIL');
+export const DEFAULT_USER_PASSWORD = requireEnvVariable(
+  'DEFAULT_USER_PASSWORD',
+);

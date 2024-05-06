@@ -2,6 +2,8 @@
   "compilerOptions": {
     "target": "ES2021",
     "module": "CommonJS",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "baseUrl": ".",
     "paths": {
