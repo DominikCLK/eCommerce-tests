@@ -2,7 +2,7 @@ import { prepareRandomUserData } from '@_src/factories/user.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { RegisterUserModel } from '@_src/models/user.model';
 
-test.describe('Verify register', () => {
+test.describe('Verify register @smoke-UI', () => {
   let registerUserData: RegisterUserModel;
 
   test.beforeEach(async ({ registerPage }) => {
