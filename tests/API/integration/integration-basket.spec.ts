@@ -1,6 +1,7 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { API_URL } from 'config/env.config';
 
+test.describe.configure({ mode: 'serial' });
 test.describe('Get product details, add one product to basket then remove @API-integration', () => {
   const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
   const createBasketUrl = `${API_URL}/carts`;

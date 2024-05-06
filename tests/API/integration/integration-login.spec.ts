@@ -11,6 +11,7 @@ const USER_ENDPOINT = '/users/me';
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
+test.describe.configure({ mode: 'serial' });
 test.describe('Login to portal and verify user @API-integration', () => {
   let accessToken;
 
