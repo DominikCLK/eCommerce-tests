@@ -134,10 +134,7 @@ jobs:
             node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Run all tests
-        run:  |
-          npm run test:api:integration:workflow &&
-          npm run test:ui:smoke:workflow &&
-          npm run test:ui:e2e:workflow &&
+        run: npm run test:all
       - name: Archive tests results
         if: success() || failure()
         uses: actions/upload-artifact@v4

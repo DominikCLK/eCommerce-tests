@@ -8,6 +8,7 @@
     "format:check": "npx prettier . --check \"!**.ts\"",
     "lint": "npx eslint . --ext .ts --max-warnings=0",
     "test": "npx playwright test",
+    "test:all": "BASE_URL=$BASE_URL API_URL=$API_URL DEFAULT_USER_EMAIL=$DEFAULT_USER_EMAIL DEFAULT_USER_PASSWORD=$DEFAULT_USER_PASSWORD npx playwright test",
     "test:headed": "npm run test -- --headed",
     "test:ui": "npm run test -- --ui",
     "show-report": "npx playwright show-report",
