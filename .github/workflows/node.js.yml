@@ -87,7 +87,7 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-setup-tests-report
+          name: Setup Tests Report
           path: |
             ./playwright-report/**/*.*
       - name: Publish Setup Tests Report
@@ -139,7 +139,7 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: api-integration-tests-report
+          name: All Tests Report
           path: |
             ./playwright-report/**/*.*
       - name: Publish test report
