@@ -1,7 +1,7 @@
 name: Playwright E-commerce Tests
 on:
   push:
-    branches: [main, master, newWorkflowsStrategy]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
 
