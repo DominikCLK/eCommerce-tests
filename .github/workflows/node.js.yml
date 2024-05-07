@@ -135,7 +135,6 @@ jobs:
           key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Run all tests
         run:  |
-          npm run test:setup:workflow &&
           npm run test:api:integration:workflow &&
           npm run test:ui:smoke:workflow &&
           npm run test:ui:e2e:workflow &&
