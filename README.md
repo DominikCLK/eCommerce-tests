@@ -17,25 +17,43 @@ This project aims to ensure the reliability and functionality of the [E-commerce
 - **Smoke testing:** Conduct basic, quick checks on functionalities to ensure the software's fundamental features are operational. These tests are designed to provide a rapid assessment of system stability and readiness for more comprehensive testing, serving as a preliminary validation step before delving into deeper testing scenarios.
 
 - **Backend API testing:** Ensure the robustness and reliability of your backend infrastructure by meticulously examining each endpoint and functionality.
-- **Integration testing:** Validate the seamless interaction between different components of your system to ensure smooth data flow and functionality across interconnected modules..
+
+- **Integration testing:** Validate the seamless interaction between different components of your system to ensure smooth data flow and functionality across interconnected modules.
 
 - **Scenario Coverage:** Cover various user journeys, including login to account, fund transfers, and balance verification.
 
-- **Continuous Integration:** Integrate the testing suite into the continuous integration pipeline for quick feedback.
+- **Continuous Integration:** Integrate the testing suite into the continuous integration pipeline for quick feedback. GitHub Action you can see here 
+https://github.com/DominikCLK/eCommerce-tests/actions
 
 <p align="center">
   <a href="#">
-    <img src="https://github.com/DominikCLK/eCommerce-tests/assets/75272795/094f501c-69ff-4ca7-b9fc-a33426c4d970" />
+    <img src="https://github.com/DominikCLK/eCommerce-tests/assets/75272795/63face02-d380-4fda-a419-efce56d9b5d6" />
   </a>
 </p>
 
+## 🛠 Technologies Used
+
+- **`Playwright Framework:`** A powerful automation framework for browsers.
+- **`TypeScript:`** Enhance code readability and maintainability with strong typing and modern features.
+- **`Faker library:`** A versatile tool in software development for generating synthetic but realistic data. With Faker, developers can effortlessly create mock datasets for testing, prototyping, or populating databases with fictional yet believable information. This library is invaluable for scenarios requiring dummy data without compromising sensitive information, facilitating efficient testing and development processes.
+- **`ESLint:`** Ensure code consistency and detect potential errors or deviations from coding standards in JavaScript and TypeScript projects. By enforcing a set of configurable rules, ESLint helps maintain clean and error-free code, improving code quality and readability across the development team.
+- **`Prettier:`** Automatically format code according to a predefined set of rules, enhancing code readability and reducing formatting inconsistencies. Prettier supports various programming languages, including JavaScript and TypeScript, and seamlessly integrates with popular code editors and version control systems, streamlining the development workflow.
+- **`Postman:`** Simplify API development and testing with a comprehensive platform for building, testing, and documenting APIs. Postman enables developers to create requests, organize collections, and automate testing workflows, facilitating collaboration and ensuring API reliability and functionality.
+- **`Continuous Integration (CI/GitHub Actions):`** Automate testing on code changes for a continuous feedback loop. GitHub Action you can see here 
+https://github.com/DominikCLK/eCommerce-tests/actions
+
+ <p align="center">
+  <a href="#">
+    <img src="https://simpleskill.icons.workers.dev/svg?i=visualstudiocode,node.js,eslint,prettier,playwright,typescript,postman,githubactions,git,github" />
+  </a>
+</p>
 ## 💬 Note
 
 ### The current branch I am working on:
 
 - testsAPI
 
-### Here I am presenting tests for the E-commerce app. To log in, enter credentials from table. Do not provide real data!
+### Here I am presenting tests for the E-commerce app. To log in, enter credentials from the table. Do not provide real data!
 
 # Default accounts
 
@@ -45,26 +63,7 @@ This project aims to ensure the reliability and functionality of the [E-commerce
 | Jane       | Doe       | user  | customer@practicesoftwaretesting.com  | welcome01 |
 | Jack       | Howe      | user  | customer2@practicesoftwaretesting.com | welcome01 |
 
-## 🛠 Technologies Used
 
-- **Playwright Framework:** A powerful automation framework for browsers.
-- **TypeScript:** Enhance code readability and maintainability with strong typing and modern features.
-- **Faker library:** A versatile tool in software development for generating synthetic but realistic data. With Faker, developers can effortlessly create mock datasets for testing, prototyping, or populating databases with fictional yet believable information. This library is invaluable for scenarios requiring dummy data without compromising sensitive information, facilitating efficient testing and development processes.
-- **ESLint:** Ensure code consistency and detect potential errors or deviations from coding standards in JavaScript and TypeScript projects. By enforcing a set of configurable rules, ESLint helps maintain clean and error-free code, improving code quality and readability across the development team.
-- **Prettier:** Automatically format code according to a predefined set of rules, enhancing code readability and reducing formatting inconsistencies. Prettier supports various programming languages, including JavaScript and TypeScript, and seamlessly integrates with popular code editors and version control systems, streamlining the development workflow.
-- **Postman:** Simplify API development and testing with a comprehensive platform for building, testing, and documenting APIs. Postman enables developers to create requests, organize collections, and automate testing workflows, facilitating collaboration and ensuring API reliability and functionality.
-- **Continuous Integration (CI/GitHub Actions):** Automate testing on code changes for a continuous feedback loop.
-
-<p align="center">
-  <a href="#">
-    <img src="https://simpleskill.icons.workers.dev/svg?i=visualstudiocode,node.js,eslint,playwright,typescript,postman,githubactions,git,github" />
-  </a>
-</p>
-<p align="center">
-  <a href="#">
-    <img src="https://simpleskill.icons.workers.dev/svg?i=windows11,macos,googlechrome,prettier" />
-  </a>
-</p>
 
 ## ⚡️ Prepare
 
@@ -135,13 +134,13 @@ The e-commerce store with construction tools (ECTS - ECommerce Tool Shop) is des
 
 The goal of these business requirements is to provide an end-to-end functionality for a construction tools e-commerce store that allows customers to easily browse, search, and purchase the products they need, as well as ensure proper integration with modules and components via API. When creating these requirements, efforts were made to ensure consistency, ease of use, and stability of the platform.
 
-## Business requirements
+# Business requirements
 
 The business requirements introduced below regarding registration, login, product search, basket management, orders, payment process, and integration with the API interface.
 
-# Registration and Login (UI Smoke)
+## Registration and Login (UI Smoke)
 
-- ## Registration
+- Registration
 
 <br>
 
@@ -151,7 +150,7 @@ The business requirements introduced below regarding registration, login, produc
 |     | UI-S-ECTS-R01-02 | user | After successful registration, the user is redirected to the login page.  |
 |     | UI-S-ECTS-R01-03 | user | If incorrect data is provided, the message "Required field" is displayed. |
 
-- ## Login
+- Login
 
 <br>
 
@@ -163,9 +162,9 @@ The business requirements introduced below regarding registration, login, produc
 
 <br>
 
-# Registration and Login (API integration)
+## Registration and Login (API integration)
 
-- ## Registration
+- Registration
 
 <br>
 
@@ -173,9 +172,9 @@ The business requirements introduced below regarding registration, login, produc
 | --- | ----------------- | ---- | ----------------------------------------------------------------------------------------------------------- | --- |
 |     | API-I-ECTS-R03-01 | user | Verify that endpoint '/users/register' create new user (POST method) - status 201                           |
 |     | API-I-ECTS-R03-02 | user | Verify that endpoint '/users/login' successfully login with new user credentials (POST method) - status 200 |
-|     | API-I-ECTS-R03-03 | user | Verify that endpoint '/users/me' successfully return new user details (GET method) - status 200             |
+|     | API-I-ECTS-R03-03 | user | Verify that endpoint '/users/me' successfully returns new user details (GET method) - status 200             |
 
-- ## Login
+- Login
 
 <br>
 
@@ -183,22 +182,25 @@ The business requirements introduced below regarding registration, login, produc
 | --- | ----------------- | ---- | --------------------------------------------------------------------------------------------------------------------- | --- |
 |     | API-I-ECTS-R04-01 | user | Verify that endpoint '/users/login' login with default credentials (POST method) - status 200                         |
 |     | API-I-ECTS-R04-02 | user | Verify that endpoint '/users/login' has a bearer token (POST method) - status 200                                     |
-|     | API-I-ECTS-R04-03 | user | Verify that endpoint '/users/me' successfully return default user details and correct token (GET method) - status 200 |
+|     | API-I-ECTS-R04-03 | user | Verify that endpoint '/users/me' successfully returns default user details and correct token (GET method) - status 200 |
 
 <br>
 
-# Basket (API integration)
+## Basket (API integration)
 
 <br>
 
 |     | TAG               | Role | Description                                                                                                                                        |     |
 | --- | ----------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-|     | API-I-ECTS-R04-01 | user | Verify that endpoint '/products?between=price,1,100&page=1' return details of one product (GET method) - status 200                                |
-|     | API-I-ECTS-R04-02 | user | Verify that endpoint '/carts' successfully create basket object an uniq id (POST method) - status 201                                              |
-|     | API-I-ECTS-R04-03 | user | Verify that endpoint '/carts/basketId' successfully add product to basket, response has 'item added or updated' message (POST method) - status 200 |
+|     | API-I-ECTS-R04-01 | user | Verify that endpoint '/products?between=price,1,100&page=1' returns details of one product (GET method) - status 200                                |
+|     | API-I-ECTS-R04-02 | user | Verify that endpoint '/carts' successfully create basket object an unique id (POST method) - status 201                                              |
+|     | API-I-ECTS-R04-03 | user | Verify that endpoint '/carts/basketId' successfully adds product to the basket, the response has 'item added or updated' message (POST method) - status 200 |
 |     | API-I-ECTS-R04-04 | user | Verify that endpoint '/carts/' successfully return products in basket, verify product id (GET method) - status 200                                 |
-|     | API-I-ECTS-R04-05 | user | Verify that endpoint '/carts/' successfully remove products in basket (DELETE method) - status 204                                                 |
-|     | API-I-ECTS-R04-06 | user | Verify that endpoint '/carts/basketId' successfully return empty basket, verify cart_items is 0 (GET method) - status 200                          |
+|     | API-I-ECTS-R04-05 | user | Verify that endpoint '/carts/' successfully removes products in the basket (DELETE method) - status 204                                                 |
+|     | API-I-ECTS-R04-06 | user | Verify that endpoint '/carts/basketId' successfully returns empty basket, verify cart_items is 0 (GET method) - status 200                          |
+
+
+
 
 ## Author
 
