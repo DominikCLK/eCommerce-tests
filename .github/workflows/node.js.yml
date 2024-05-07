@@ -1,7 +1,7 @@
 name: Playwright E-commerce Tests
 on:
   push:
-    branches: [main, master, newWorkflowsStrategy]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
 
@@ -22,15 +22,17 @@ jobs:
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'npm'
           registry-url: 'https://npm.pkg.github.com'
       - name: Get installed Playwright version
         id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
+        run: echo "PLAYWRIGHT_VERSION=$(node -e \"console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)\")" >> $GITHUB_ENV
       - name: Cache playwright binaries
         uses: actions/cache@v4
         id: playwright-cache
@@ -54,99 +56,39 @@ jobs:
 
   run-setup-tests:
     needs: [prepare-env]
-    timeout-minutes: 5
+    timeout-minutes: 2
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: node-cache
-        with:
-          path: |
-            node_modules
-          key: node_modules-${{ hashFiles('package-lock.json') }}
-      - name: Run Playwright Setup tests
+      - name: Run setup tests
         run: npm run test:setup:workflow
-      - name: Archive tests results
-        if: success() || failure()
+      - name: Archive test results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: test-setup-tests-report
-          path: |
-            ./playwright-report/**/*.*
-      - name: Publish Setup Tests Report
+          name: setup-tests-report
+          path: ./playwright-report/**/*.*
+      - name: Publish Test Report
+        if: always()
         uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
         with:
           report_paths: './playwright-report/results.xml'
-      # - name: Save cache always
-      #   id: save-playwright-cache
-      #   if: always()
-      #   uses: actions/cache/save@v3
-      #   with:
-      #     path: |
-      #       ~/.cache/ms-playwright
-      #     key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
-  run-all-tests:
+  run-tests:
     needs: [prepare-env, run-setup-tests]
-    timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: node-cache
-        with:
-          path: |
-            node_modules
-          key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Run all tests
         run: npm run test:all
-      - name: Archive tests results
-        if: success() || failure()
+      - name: Archive test results
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: api-integration-tests-report
-          path: |
-            ./playwright-report/**/*.*
-      - name: Publish test report
+          name: all-tests-report
+          path: ./playwright-report/**/*.*
+      - name: Publish Test Report
+        if: always()
         uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
         with:
           report_paths: './playwright-report/results.xml'
-
-
-
