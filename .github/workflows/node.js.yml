@@ -87,7 +87,7 @@ jobs:
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: test-setup-tests-report
+          name: Setup Tests Report
           path: |
             ./playwright-report/**/*.*
       - name: Publish Setup Tests Report
@@ -104,95 +104,7 @@ jobs:
       #       ~/.cache/ms-playwright
       #     key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
 
-  run-api-integration-tests:
-    needs: [prepare-env]
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    environment: test-env-ecommerce
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: node-cache
-        with:
-          path: |
-            node_modules
-          key: node_modules-${{ hashFiles('package-lock.json') }}
-      - name: Run API integration tests
-        run: npm run test:api:integration:workflow
-      - name: Archive tests results
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: api-integration-tests-report
-          path: |
-            ./playwright-report/**/*.*
-      - name: Publish API Integration Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
-        with:
-          report_paths: './playwright-report/results.xml'
-
-  run-ui-smoke-tests:
-    needs: [prepare-env]
-    timeout-minutes: 5
-    runs-on: ubuntu-latest
-    environment: test-env-ecommerce
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: 'npm'
-          registry-url: 'https://npm.pkg.github.com'
-      - name: Get installed Playwright version
-        id: playwright-version
-        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
-      - name: Cache playwright binaries
-        uses: actions/cache@v4
-        id: playwright-cache
-        with:
-          path: |
-            ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
-      - name: Cache node_modules
-        uses: actions/cache@v4
-        id: node-cache
-        with:
-          path: |
-            node_modules
-          key: node_modules-${{ hashFiles('package-lock.json') }}
-      - name: Run UI Smoke tests
-        run: npm run test:ui:smoke:workflow
-      - name: Archive tests results
-        if: success() || failure()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ui-smoke-tests-report
-          path: |
-            ./playwright-report/**/*.*
-      - name: Publish UI Smoke Test Report
-        uses: mikepenz/action-junit-report@v4
-        if: success() || failure()
-        with:
-          report_paths: './playwright-report/results.xml'
-
-  run-ui-e2e-tests:
+  run-all-tests:
     needs: [prepare-env, run-setup-tests]
     timeout-minutes: 5
     runs-on: ubuntu-latest
@@ -221,17 +133,20 @@ jobs:
           path: |
             node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
-      - name: Run UI E2E tests
-        run: npm run test:ui:e2e:workflow
-      - name: Archive UI E2E tests results
+      - name: Run all tests
+        run: npm run test:all
+      - name: Archive tests results
         if: success() || failure()
         uses: actions/upload-artifact@v4
         with:
-          name: ui-e2e-tests-report
+          name: All Tests Report
           path: |
             ./playwright-report/**/*.*
-      - name: Publish UI Smoke Test Report
+      - name: Publish test report
         uses: mikepenz/action-junit-report@v4
         if: success() || failure()
         with:
           report_paths: './playwright-report/results.xml'
+
+
+
