@@ -13,7 +13,7 @@ test.describe.configure({ mode: 'serial' });
 test.describe('Login to portal and verify user @API-integration', () => {
   let accessToken;
 
-  test('POST login to portal with correct credentials', async ({ request }) => {
+  test('POST login to portal with default credentials', async ({ request }) => {
     // Act
     try {
       const loginResponse = await request.post(
@@ -39,7 +39,7 @@ test.describe('Login to portal and verify user @API-integration', () => {
     }
   });
 
-  test('GET verify user data and access token', async ({ request }) => {
+  test('GET verify default user data and access token', async ({ request }) => {
     // Act
     try {
       const userResponse = await request.get(
