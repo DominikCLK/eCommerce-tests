@@ -1,6 +1,7 @@
 import { APIEndpoints } from '@_src/enums/endpoints.dicts';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import userDataJsonObject from '@_src/test-data/user.data.json';
+import { parseResponseAndCheckStatus } from '@_src/utils/api.util';
 import {
   API_URL,
   DEFAULT_USER_EMAIL,
@@ -13,7 +14,9 @@ test.describe.configure({ mode: 'serial' });
 test.describe('Login to portal and verify user @API-integration', () => {
   let accessToken;
 
-  test('POST login to portal with default credentials', async ({ request }) => {
+  test('POST login to portal with default credentials @API-I-ECTS-R04-01 @API-I-ECTS-R04-02', async ({
+    request,
+  }) => {
     // Act
     try {
       const loginResponse = await request.post(
@@ -26,12 +29,14 @@ test.describe('Login to portal and verify user @API-integration', () => {
         },
       );
 
-      const loginResponseJson = await loginResponse.json();
+      const loginResponseJson = await parseResponseAndCheckStatus(
+        loginResponse,
+        200,
+      );
       const tokenType = loginResponseJson.token_type;
       accessToken = loginResponseJson.access_token;
 
       // Assert
-      expect(loginResponse.status()).toBe(200);
       expect(tokenType).toBe('bearer');
       expect(accessToken).not.toBeNull();
     } catch (error) {
@@ -39,7 +44,9 @@ test.describe('Login to portal and verify user @API-integration', () => {
     }
   });
 
-  test('GET verify default user data and access token', async ({ request }) => {
+  test('GET verify default user data and access token @API-I-ECTS-R04-03', async ({
+    request,
+  }) => {
     // Act
     try {
       const userResponse = await request.get(
@@ -50,7 +57,10 @@ test.describe('Login to portal and verify user @API-integration', () => {
           },
         },
       );
-      const userResponseJson = await userResponse.json();
+      const userResponseJson = await parseResponseAndCheckStatus(
+        userResponse,
+        200,
+      );
 
       const {
         first_name: userFirstName,
@@ -62,7 +72,6 @@ test.describe('Login to portal and verify user @API-integration', () => {
       } = userResponseJson;
 
       // Assert
-      expect(userResponse.status()).toBe(200);
       expect(userFirstName).toBe(
         userDataJsonObject.userDefaultAccountData.jsonUserFirstName,
       );
