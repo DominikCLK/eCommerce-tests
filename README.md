@@ -22,8 +22,8 @@ This project aims to ensure the reliability and functionality of the [E-commerce
 
 - **Scenario Coverage:** Cover various user journeys, including login to account, fund transfers, and balance verification.
 
-- **Continuous Integration:** Integrate the testing suite into the continuous integration pipeline for quick feedback. GitHub Action you can see here 
-https://github.com/DominikCLK/eCommerce-tests/actions
+- **Continuous Integration:** Integrate the testing suite into the continuous integration pipeline for quick feedback. GitHub Action you can see here
+  https://github.com/DominikCLK/eCommerce-tests/actions
 
 <p align="center">
   <a href="#">
@@ -39,8 +39,8 @@ https://github.com/DominikCLK/eCommerce-tests/actions
 - **`ESLint:`** Ensure code consistency and detect potential errors or deviations from coding standards in JavaScript and TypeScript projects. By enforcing a set of configurable rules, ESLint helps maintain clean and error-free code, improving code quality and readability across the development team.
 - **`Prettier:`** Automatically format code according to a predefined set of rules, enhancing code readability and reducing formatting inconsistencies. Prettier supports various programming languages, including JavaScript and TypeScript, and seamlessly integrates with popular code editors and version control systems, streamlining the development workflow.
 - **`Postman:`** Simplify API development and testing with a comprehensive platform for building, testing, and documenting APIs. Postman enables developers to create requests, organize collections, and automate testing workflows, facilitating collaboration and ensuring API reliability and functionality.
-- **`Continuous Integration (CI/GitHub Actions):`** Automate testing on code changes for a continuous feedback loop. GitHub Action you can see here 
-https://github.com/DominikCLK/eCommerce-tests/actions
+- **`Continuous Integration (CI/GitHub Actions):`** Automate testing on code changes for a continuous feedback loop. GitHub Action you can see here
+  https://github.com/DominikCLK/eCommerce-tests/actions
 
  <p align="center">
   <a href="#">
@@ -62,8 +62,6 @@ https://github.com/DominikCLK/eCommerce-tests/actions
 | John       | Doe       | admin | admin@practicesoftwaretesting.com     | welcome01 |
 | Jane       | Doe       | user  | customer@practicesoftwaretesting.com  | welcome01 |
 | Jack       | Howe      | user  | customer2@practicesoftwaretesting.com | welcome01 |
-
-
 
 ## ⚡️ Prepare
 
@@ -172,16 +170,16 @@ The business requirements introduced below regarding registration, login, produc
 | --- | ----------------- | ---- | ----------------------------------------------------------------------------------------------------------- | --- |
 |     | API-I-ECTS-R03-01 | user | Verify that endpoint '/users/register' create new user (POST method) - status 201                           |
 |     | API-I-ECTS-R03-02 | user | Verify that endpoint '/users/login' successfully login with new user credentials (POST method) - status 200 |
-|     | API-I-ECTS-R03-03 | user | Verify that endpoint '/users/me' successfully returns new user details (GET method) - status 200             |
+|     | API-I-ECTS-R03-03 | user | Verify that endpoint '/users/me' successfully returns new user details (GET method) - status 200            |
 
 - Login
 
 <br>
 
-|     | TAG               | Role | Description                                                                                                           |     |
-| --- | ----------------- | ---- | --------------------------------------------------------------------------------------------------------------------- | --- |
-|     | API-I-ECTS-R04-01 | user | Verify that endpoint '/users/login' login with default credentials (POST method) - status 200                         |
-|     | API-I-ECTS-R04-02 | user | Verify that endpoint '/users/login' has a bearer token (POST method) - status 200                                     |
+|     | TAG               | Role | Description                                                                                                            |     |
+| --- | ----------------- | ---- | ---------------------------------------------------------------------------------------------------------------------- | --- |
+|     | API-I-ECTS-R04-01 | user | Verify that endpoint '/users/login' login with default credentials (POST method) - status 200                          |
+|     | API-I-ECTS-R04-02 | user | Verify that endpoint '/users/login' has a bearer token (POST method) - status 200                                      |
 |     | API-I-ECTS-R04-03 | user | Verify that endpoint '/users/me' successfully returns default user details and correct token (GET method) - status 200 |
 
 <br>
@@ -190,17 +188,14 @@ The business requirements introduced below regarding registration, login, produc
 
 <br>
 
-|     | TAG               | Role | Description                                                                                                                                        |     |
-| --- | ----------------- | ---- | -------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
-|     | API-I-ECTS-R04-01 | user | Verify that endpoint '/products?between=price,1,100&page=1' returns details of one product (GET method) - status 200                                |
-|     | API-I-ECTS-R04-02 | user | Verify that endpoint '/carts' successfully create basket object an unique id (POST method) - status 201                                              |
+|     | TAG               | Role | Description                                                                                                                                                 |     |
+| --- | ----------------- | ---- | ----------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+|     | API-I-ECTS-R04-01 | user | Verify that endpoint '/products?between=price,1,100&page=1' returns details of one product (GET method) - status 200                                        |
+|     | API-I-ECTS-R04-02 | user | Verify that endpoint '/carts' successfully create basket object an unique id (POST method) - status 201                                                     |
 |     | API-I-ECTS-R04-03 | user | Verify that endpoint '/carts/basketId' successfully adds product to the basket, the response has 'item added or updated' message (POST method) - status 200 |
-|     | API-I-ECTS-R04-04 | user | Verify that endpoint '/carts/' successfully return products in basket, verify product id (GET method) - status 200                                 |
-|     | API-I-ECTS-R04-05 | user | Verify that endpoint '/carts/' successfully removes products in the basket (DELETE method) - status 204                                                 |
-|     | API-I-ECTS-R04-06 | user | Verify that endpoint '/carts/basketId' successfully returns empty basket, verify cart_items is 0 (GET method) - status 200                          |
-
-
-
+|     | API-I-ECTS-R04-04 | user | Verify that endpoint '/carts/' successfully return products in basket, verify product id (GET method) - status 200                                          |
+|     | API-I-ECTS-R04-05 | user | Verify that endpoint '/carts/' successfully removes products in the basket (DELETE method) - status 204                                                     |
+|     | API-I-ECTS-R04-06 | user | Verify that endpoint '/carts/basketId' successfully returns empty basket, verify cart_items is 0 (GET method) - status 200                                  |
 
 ## Author
 

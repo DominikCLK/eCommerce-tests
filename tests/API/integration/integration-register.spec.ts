@@ -1,36 +1,24 @@
 import { APIEndpoints } from '@_src/enums/endpoints.dicts';
-import { prepareRandomUserData } from '@_src/factories/user.factory';
+import { prepareUserDataForApi } from '@_src/factories/user.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { RegisterUserModel } from '@_src/models/user.model';
+import { RegisterApiUserModel } from '@_src/models/user.model';
 import { parseResponseAndCheckStatus } from '@_src/utils/api.util';
 import { API_URL } from 'config/env.config';
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
-const registerUserData: RegisterUserModel = prepareRandomUserData();
+const registerUserDataApi: RegisterApiUserModel = prepareUserDataForApi();
 
 test.describe.configure({ mode: 'serial' });
 test.describe('Register new user and login to portal @API-integration', () => {
   let createdUserId;
   let accessToken;
 
-  test('POST register new user', async ({ request }) => {
+  test('POST register new user @API-I-ECTS-R03-01', async ({ request }) => {
     // Act
     const registerNewUserResponse = await request.post(
       buildUrl(APIEndpoints.REGISTER_ENDPOINT),
       {
-        data: {
-          address: registerUserData.userAddress,
-          city: registerUserData.userCity,
-          country: 'PL',
-          dob: registerUserData.userBirthDate,
-          email: registerUserData.userEmail,
-          first_name: registerUserData.userFirstName,
-          last_name: registerUserData.userLastName,
-          password: registerUserData.userPassword,
-          phone: registerUserData.userPhone,
-          postcode: registerUserData.userPostcode,
-          state: registerUserData.userState,
-        },
+        data: registerUserDataApi,
       },
     );
 
@@ -44,14 +32,16 @@ test.describe('Register new user and login to portal @API-integration', () => {
     expect(createdUserId).not.toBeNull();
   });
 
-  test('POST login to portal with created user', async ({ request }) => {
+  test('POST login to portal with created user @API-I-ECTS-R03-02', async ({
+    request,
+  }) => {
     // Act
     const newUserLoginResponse = await request.post(
       buildUrl(APIEndpoints.LOGIN_ENDPOINT),
       {
         data: {
-          email: registerUserData.userEmail,
-          password: registerUserData.userPassword,
+          email: registerUserDataApi.email,
+          password: registerUserDataApi.password,
         },
       },
     );
@@ -68,7 +58,7 @@ test.describe('Register new user and login to portal @API-integration', () => {
     expect(accessToken).not.toBeNull();
   });
 
-  test('GET verify new user', async ({ request }) => {
+  test('GET verify new user @API-I-ECTS-R03-03', async ({ request }) => {
     // Act
     const userResponse = await request.get(
       buildUrl(APIEndpoints.USER_ENDPOINT),

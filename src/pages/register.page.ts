@@ -18,12 +18,15 @@ export class RegisterPage extends BasePage {
   emailInput = this.page.locator('[data-test="email"]');
   passwordInput = this.page.locator('[data-test="password"]');
   registerButton = this.page.locator('[data-test="register-submit"]');
+  errorMessage = this.page.locator('[data-test="first-name-error"]');
 
   constructor(page: Page) {
     super(page);
   }
 
-  async register(registerUserData: RegisterUserModel): Promise<LoginPage> {
+  async fillRegisterFields(
+    registerUserData: RegisterUserModel,
+  ): Promise<LoginPage> {
     await this.firstNameInput.fill(registerUserData.userFirstName);
     await this.lastNameInput.fill(registerUserData.userLastName);
     await this.birthDateInput.fill(registerUserData.userBirthDate);
@@ -35,8 +38,6 @@ export class RegisterPage extends BasePage {
     await this.phoneInput.fill(registerUserData.userPhone);
     await this.emailInput.fill(registerUserData.userEmail);
     await this.passwordInput.fill(registerUserData.userPassword);
-
-    await this.registerButton.click();
 
     return new LoginPage(this.page);
   }

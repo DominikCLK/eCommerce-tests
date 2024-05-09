@@ -1,5 +1,5 @@
 import { STORAGE_STATE } from '@_pw-config';
-import { prepareRandomUserData } from '@_src/factories/user.factory';
+import { prepareUserDataForUi } from '@_src/factories/user.factory';
 import { expect, test as setup } from '@_src/fixtures/merge.fixture';
 import { RegisterUserModel } from '@_src/models/user.model';
 
@@ -7,7 +7,7 @@ setup.describe('Register, login to app and save session', () => {
   let registerUserData: RegisterUserModel;
 
   setup.beforeEach(async ({ registerPage }) => {
-    registerUserData = prepareRandomUserData();
+    registerUserData = prepareUserDataForUi();
     await registerPage.goto();
   });
 
@@ -20,7 +20,8 @@ setup.describe('Register, login to app and save session', () => {
       const loggedHeading = 'My account';
 
       // Act
-      await registerPage.register(registerUserData);
+      await registerPage.fillRegisterFields(registerUserData);
+      await registerPage.registerButton.click();
       const title = await registerPage.getTitle();
 
       //Assert

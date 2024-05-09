@@ -14,3 +14,17 @@ export interface RegisterUserModel {
   userEmail: string;
   userPassword: string;
 }
+
+export interface RegisterApiUserModel {
+  address: string;
+  city: string;
+  country: string;
+  dob: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+  password: string;
+  phone: string;
+  postcode: string;
+  state: string;
+}
