@@ -46,9 +46,4 @@ test.describe('Verify register @smoke-UI', () => {
     await expect(registerPage.errorMessage).toBeVisible();
     await expect(registerPage.errorMessage).toHaveText(expectedErrorMessage);
   });
-
-
-
-
-  
 });
