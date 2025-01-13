@@ -1,16 +1,22 @@
 name: Playwright E-commerce Tests
 on:
   push:
-    branches: [main, master]
+    branches: ['**']
   pull_request:
-    branches: [main, master]
+    branches: ['**']
   workflow_dispatch:
     inputs:
-      branch:
-        description: 'Branch to run tests on'
+      test_tag:
+        description: 'Tag to run tests (without @)'
         required: true
-        default: 'main'
-        type: string
+        type: choice
+        options:
+          - setup
+          - api-integration
+          - smoke-ui
+          - logged
+          - e2e
+          - all
 
 permissions:
   contents: read
@@ -30,8 +36,6 @@ jobs:
     environment: test-env-ecommerce
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -63,6 +67,7 @@ jobs:
 
   run-setup-tests:
     needs: [prepare-env]
+    if: github.event_name != 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
@@ -115,6 +120,7 @@ jobs:
 
   run-all-tests:
     needs: [prepare-env, run-setup-tests]
+    if: github.event_name != 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
@@ -149,6 +155,57 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: All Tests Report
+          path: |
+            ./playwright-report/**/*.*
+      - name: Publish test report
+        uses: mikepenz/action-junit-report@v4
+        if: success() || failure()
+        with:
+          report_paths: './playwright-report/results.xml'
+
+  run-tagged-tests:
+    name: Run ${{ inputs.test_tag }} tests
+    needs: [prepare-env]
+    if: github.event_name == 'workflow_dispatch'
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    environment: test-env-ecommerce
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          registry-url: 'https://npm.pkg.github.com'
+      - name: Get installed Playwright version
+        id: playwright-version
+        run: echo "PLAYWRIGHT_VERSION=$(node -e "console.log(require('./package-lock.json').packages['node_modules/@playwright/test'].version)")" >> $GITHUB_ENV
+      - name: Cache playwright binaries
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ env.PLAYWRIGHT_VERSION }}
+      - name: Cache node_modules
+        uses: actions/cache@v4
+        id: node-cache
+        with:
+          path: |
+            node_modules
+          key: node_modules-${{ hashFiles('package-lock.json') }}
+      - name: Run tagged tests
+        run: |
+          if [ "${{ inputs.test_tag }}" = "all" ]; then
+            npm run test:all
+          else
+            npx playwright test --grep "@${{ inputs.test_tag }}"
+          fi
+      - name: Archive tests results
+        if: success() || failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Tagged Tests Report
           path: |
             ./playwright-report/**/*.*
       - name: Publish test report
