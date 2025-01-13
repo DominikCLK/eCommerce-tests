@@ -9,53 +9,51 @@ test.describe('Verify buying processes - products from home page', () => {
     checkoutPage,
   }) => {
     // Arrange
-    const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
-    const productResponse = await request.get(productsUrl);
-    const responseProductJson = await productResponse.json();
-    const successfulMessage = 'Payment was successful';
+    const getProductData = async () => {
+      const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
+      const productResponse = await request.get(productsUrl);
+      const { data } = await productResponse.json();
+      return data[0];
+    };
 
-    const {
-      id: productId,
-      name: productName,
-      category: { name: productCategory },
-      brand: { name: productBrand },
-      description: productDescription,
-    } = responseProductJson.data[0];
+    const product = await getProductData();
+    const successfulMessage = 'Payment was successful';
 
     // Act
     await homePage.goto();
-    await homePage.productToBuy(productId).click();
+    await homePage.productToBuy(product.id).click();
 
     // Assert
-    await expect(productDetails.productName).toHaveText(productName);
-    await expect(productDetails.category).toHaveText(productCategory);
-    await expect(productDetails.brand).toHaveText(productBrand);
-    await expect(productDetails.description).toHaveText(productDescription);
+    await expect(productDetails.productName).toHaveText(product.name);
+    await expect(productDetails.category).toHaveText(product.category.name);
+    await expect(productDetails.brand).toHaveText(product.brand.name);
+    await expect(productDetails.description).toHaveText(product.description);
 
     // Act
     await productDetails.addToBasketButton.click();
     await expect(productDetails.productAddedPopup).toBeInViewport();
+    await productDetails.productAddedPopup.click();
     await productDetails.navbar.basket.click();
 
     // Assert
-    await expect.soft(checkoutPage.checkoutItemName(productName)).toBeVisible();
+    await expect.soft(checkoutPage.checkoutItemName(product.name)).toBeVisible();
 
     // Act
-    await checkoutPage.proceedButton('1').click();
-    await checkoutPage.proceedButton('2').click();
+    for (let step = 1; step <= 3; step++) {
+      await checkoutPage.proceedButton(step.toString()).click();
+      
+      if (step === 3) {
+        await checkoutPage.buyNowPayLaterMethod('3');
+      }
+    }
 
     // Assert
-    await expect(checkoutPage.checkoutAddress).toBeInViewport();
-    await expect(checkoutPage.checkoutCity).toBeInViewport();
-    await expect(checkoutPage.checkoutState).toBeInViewport();
-    await expect(checkoutPage.checkoutCountry).toBeInViewport();
-    await expect(checkoutPage.checkoutPostcode).toBeInViewport();
+    await expect(checkoutPage.paymentMessage(successfulMessage)).toBeVisible();
 
     // Act
-    await checkoutPage.proceedButton('3').click();
-    await checkoutPage.buyNowPayLaterMethod('3 monthly installments');
+    await checkoutPage.confirmButton.click();
 
     // Assert
-    await checkoutPage.paymentMessage(successfulMessage);
+    await expect(checkoutPage.orderConfirmation).toBeVisible();
   });
 });

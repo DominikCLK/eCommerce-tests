@@ -11,7 +11,7 @@ export class ProductDetails extends BasePage {
   addToBasketButton = this.page.locator('[data-test="add-to-cart"]');
   addToFavButton = this.page.locator('[data-test="add-to-favorites"]');
   unauthorizedPopup = this.page.getByText('Unauthorized, can not add');
-  productAddedPopup = this.page.getByText('Product added to shopping');
+  productAddedPopup = this.page.getByText('Product added to shopping cart.');
   quantity = this.page.locator('[data-test="quantity"]');
 
   navbar = new NavbarComponent(this.page);

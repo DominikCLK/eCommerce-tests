@@ -4,7 +4,7 @@ import { LoginPage } from '@_src/pages/login.page';
 import { Page } from '@playwright/test';
 
 export class RegisterPage extends BasePage {
-  url = 'https://practicesoftwaretesting.com/#/auth/register';
+  url = 'auth/register';
 
   firstNameInput = this.page.locator('[data-test="first-name"]');
   lastNameInput = this.page.locator('[data-test="last-name"]');

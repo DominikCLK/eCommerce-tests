@@ -23,15 +23,16 @@ export class CheckoutPage extends BasePage {
   paymentMethod = this.page.locator('[data-test="payment-method"]');
   monthlyInstallments = this.page.locator('[data-test="monthly_installments"]');
 
-  finishButton = this.page.locator('[data-test="finish"]');
+  confirmButton = this.page.locator('[data-test="finish"]');
+  orderConfirmation = this.page.locator('#order-confirmation')
 
   constructor(page: Page) {
     super(page);
   }
 
   async buyNowPayLaterMethod(month: string): Promise<void> {
-    await this.paymentMethod.selectOption('4: Buy Now Pay Later');
+    await this.paymentMethod.selectOption('buy-now-pay-later');
     await this.monthlyInstallments.selectOption(month);
-    await this.finishButton.click();
+    await this.confirmButton.click();
   }
 }
