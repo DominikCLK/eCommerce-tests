@@ -1,26 +1,10 @@
 name: Playwright E-commerce Tests
 on:
   push:
-    branches: [main, master]
+    branches: ['**']
   pull_request:
-    branches: [main, master]
+    branches: ['**']
   workflow_dispatch:
-    inputs:
-      branch:
-        description: 'Branch to run tests on'
-        required: true
-        default: 'main'
-        type: string
-      test_type:
-        description: 'Type of tests to run'
-        required: true
-        type: choice
-        default: 'all'
-        options:
-          - all
-          - api
-          - e2e
-          - smoke
 
 permissions:
   contents: read
@@ -40,8 +24,6 @@ jobs:
     environment: test-env-ecommerce
     steps:
       - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event.inputs.branch || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 18
@@ -166,22 +148,3 @@ jobs:
         if: success() || failure()
         with:
           report_paths: './playwright-report/results.xml'
-      - name: Run API tests
-        if: github.event.inputs.test_type == 'api' || github.event.inputs.test_type == 'all' || contains(github.event.head_commit.message, '[api]')
-        run: npm run test:api -- --retries=2 --reporter=html
-      - name: Run E2E tests
-        if: github.event.inputs.test_type == 'e2e' || github.event.inputs.test_type == 'all' || contains(github.event.head_commit.message, '[e2e]')
-        run: npm run test:e2e -- --retries=2 --reporter=html
-      - name: Run Smoke tests
-        if: github.event.inputs.test_type == 'smoke' || contains(github.event.head_commit.message, '[smoke]')
-        run: npm run test:smoke -- --retries=2 --reporter=html
-      - name: Generate HTML report
-        if: always()
-        run: npx playwright show-report
-      - name: Upload HTML report
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: playwright-html-report-${{ github.run_id }}
-          path: playwright-report/
-          retention-days: 14
