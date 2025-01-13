@@ -20,8 +20,7 @@ export class LoginPage extends BasePage {
     await this.userEmailInput.fill(registerUserData.userEmail);
     await this.userPasswordInput.fill(registerUserData.userPassword);
 
-    const isButtonDisabled =
-      (await this.loginButton.getAttribute('disabled')) === '';
+    const isButtonDisabled = await this.loginButton.isDisabled();
 
     if (!isButtonDisabled) {
       await this.loginButton.click();

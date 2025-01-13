@@ -9,11 +9,11 @@ export class HomePage extends BasePage {
   });
   overview = this.page.locator('app-overview');
 
-  productToBuy(id: string): Locator {
-    return this.page.locator(`[data-test="product-${id}"]`);
-  }
-
   constructor(page: Page) {
     super(page);
+  }
+  
+  productToBuy(id: string): Locator {
+    return this.page.locator(`[data-test="product-${id}"]`);
   }
 }

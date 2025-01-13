@@ -10,84 +10,75 @@ import {
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
+// Dodanie pomocniczej funkcji do weryfikacji danych użytkownika
+const verifyUserData = (userResponseJson: any, expectedData: any) => {
+  const {
+    first_name: userFirstName,
+    last_name: userLastName,
+    address: userAddress,
+    city: userCity,
+    country: userCountry,
+    dob: userDob,
+  } = userResponseJson;
+
+  expect(userFirstName).toBe(expectedData.jsonUserFirstName);
+  expect(userLastName).toBe(expectedData.jsonLastName);
+  expect(userAddress).toBe(expectedData.jsonAddress);
+  expect(userCity).toBe(expectedData.jsonCity);
+  expect(userCountry).toBe(expectedData.jsonCountry);
+  expect(userDob).toBe(expectedData.jsonDob);
+};
+
+// Dodanie pomocniczej funkcji do wykonywania requestów
+const makeRequest = async (request: any, options: any) => {
+  try {
+    const response = await request[options.method](options.url, options.config);
+    return await parseResponseAndCheckStatus(response, options.expectedStatus);
+  } catch (error) {
+    throw new Error(`${options.errorMessage}: ${error.message}`);
+  }
+};
+
 test.describe.configure({ mode: 'serial' });
 test.describe('Login to portal and verify user @API-integration', () => {
-  let accessToken;
+  let accessToken: string;
 
   test('POST login to portal with default credentials @API-I-ECTS-R04-01 @API-I-ECTS-R04-02', async ({
     request,
   }) => {
-    // Act
-    try {
-      const loginResponse = await request.post(
-        buildUrl(APIEndpoints.LOGIN_ENDPOINT),
-        {
-          data: {
-            email: DEFAULT_USER_EMAIL,
-            password: DEFAULT_USER_PASSWORD,
-          },
+    const loginResponseJson = await makeRequest(request, {
+      method: 'post',
+      url: buildUrl(APIEndpoints.LOGIN_ENDPOINT),
+      config: {
+        data: {
+          email: DEFAULT_USER_EMAIL,
+          password: DEFAULT_USER_PASSWORD,
         },
-      );
+      },
+      expectedStatus: 200,
+      errorMessage: 'Login failed',
+    });
 
-      const loginResponseJson = await parseResponseAndCheckStatus(
-        loginResponse,
-        200,
-      );
-      const tokenType = loginResponseJson.token_type;
-      accessToken = loginResponseJson.access_token;
-
-      // Assert
-      expect(tokenType).toBe('bearer');
-      expect(accessToken).not.toBeNull();
-    } catch (error) {
-      throw new Error(`Login failed: ${error.message}`);
-    }
+    accessToken = loginResponseJson.access_token;
+    expect(loginResponseJson.token_type).toBe('bearer');
+    expect(accessToken).not.toBeNull();
   });
 
   test('GET verify default user data and access token @API-I-ECTS-R04-03', async ({
     request,
   }) => {
-    // Act
-    try {
-      const userResponse = await request.get(
-        buildUrl(APIEndpoints.USER_ENDPOINT),
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
+    const userResponseJson = await makeRequest(request, {
+      method: 'get',
+      url: buildUrl(APIEndpoints.USER_ENDPOINT),
+      config: {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
         },
-      );
-      const userResponseJson = await parseResponseAndCheckStatus(
-        userResponse,
-        200,
-      );
+      },
+      expectedStatus: 200,
+      errorMessage: 'User verification failed',
+    });
 
-      const {
-        first_name: userFirstName,
-        last_name: userLastName,
-        address: userAddress,
-        city: userCity,
-        country: userCountry,
-        dob: userDob,
-      } = userResponseJson;
-
-      // Assert
-      expect(userFirstName).toBe(
-        userDataJsonObject.userDefaultAccountData.jsonUserFirstName,
-      );
-      expect(userLastName).toBe(
-        userDataJsonObject.userDefaultAccountData.jsonLastName,
-      );
-      expect(userAddress).toBe(
-        userDataJsonObject.userDefaultAccountData.jsonAddress,
-      );
-      expect(userCity).toBe(userDataJsonObject.userDefaultAccountData.jsonCity);
-      expect(userCountry).toBe(
-        userDataJsonObject.userDefaultAccountData.jsonCountry,
-      );
-      expect(userDob).toBe(userDataJsonObject.userDefaultAccountData.jsonDob);
-    } catch (error) {
-      throw new Error(`User verification failed: ${error.message}`);
-    }
+    verifyUserData(userResponseJson, userDataJsonObject.userDefaultAccountData);
   });
 });

@@ -8,19 +8,23 @@ import { API_URL } from 'config/env.config';
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 const registerUserDataApi: RegisterApiUserModel = prepareUserDataForApi();
 
+const buildRequestData = (endpoint: string, data?: any, token?: string) => ({
+  url: buildUrl(endpoint),
+  options: {
+    ...(data && { data }),
+    ...(token && { headers: { Authorization: `Bearer ${token}` } }),
+  },
+});
+
 test.describe.configure({ mode: 'serial' });
 test.describe('Register new user and login to portal @API-integration', () => {
-  let createdUserId;
-  let accessToken;
+  let createdUserId: string;
+  let accessToken: string;
 
   test('POST register new user @API-I-ECTS-R03-01', async ({ request }) => {
     // Act
-    const registerNewUserResponse = await request.post(
-      buildUrl(APIEndpoints.REGISTER_ENDPOINT),
-      {
-        data: registerUserDataApi,
-      },
-    );
+    const { url, options } = buildRequestData(APIEndpoints.REGISTER_ENDPOINT, registerUserDataApi);
+    const registerNewUserResponse = await request.post(url, options);
 
     const registerNewUserResponseJson = await parseResponseAndCheckStatus(
       registerNewUserResponse,
@@ -36,15 +40,13 @@ test.describe('Register new user and login to portal @API-integration', () => {
     request,
   }) => {
     // Act
-    const newUserLoginResponse = await request.post(
-      buildUrl(APIEndpoints.LOGIN_ENDPOINT),
-      {
-        data: {
-          email: registerUserDataApi.email,
-          password: registerUserDataApi.password,
-        },
-      },
-    );
+    const loginData = {
+      email: registerUserDataApi.email,
+      password: registerUserDataApi.password,
+    };
+    
+    const { url, options } = buildRequestData(APIEndpoints.LOGIN_ENDPOINT, loginData);
+    const newUserLoginResponse = await request.post(url, options);
 
     const newUserLoginResponseJson = await parseResponseAndCheckStatus(
       newUserLoginResponse,
@@ -60,14 +62,8 @@ test.describe('Register new user and login to portal @API-integration', () => {
 
   test('GET verify new user @API-I-ECTS-R03-03', async ({ request }) => {
     // Act
-    const userResponse = await request.get(
-      buildUrl(APIEndpoints.USER_ENDPOINT),
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      },
-    );
+    const { url, options } = buildRequestData(APIEndpoints.USER_ENDPOINT, null, accessToken);
+    const userResponse = await request.get(url, options);
     const userResponseJson = await parseResponseAndCheckStatus(
       userResponse,
       200,
