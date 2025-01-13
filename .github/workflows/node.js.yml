@@ -120,7 +120,7 @@ jobs:
 
   run-all-tests:
     needs: [prepare-env, run-setup-tests]
-    if: github.event_name != 'workflow_dispatch' || (github.event_name == 'workflow_dispatch' && inputs.test_tag == 'all')
+    if: github.event_name != 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
@@ -166,7 +166,7 @@ jobs:
   run-tagged-tests:
     name: Run ${{ inputs.test_tag }} tests
     needs: [prepare-env]
-    if: github.event_name == 'workflow_dispatch' && inputs.test_tag != 'all'
+    if: github.event_name == 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
