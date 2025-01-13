@@ -9,7 +9,13 @@ on:
       test_tag:
         description: 'Tag to run tests (without @)'
         required: true
-        type: string
+        type: choice
+        options:
+          - setup
+          - api-integration
+          - smoke-ui
+          - logged
+          - e2e
 
 permissions:
   contents: read
@@ -60,6 +66,7 @@ jobs:
 
   run-setup-tests:
     needs: [prepare-env]
+    if: github.event_name != 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
@@ -112,6 +119,7 @@ jobs:
 
   run-all-tests:
     needs: [prepare-env, run-setup-tests]
+    if: github.event_name != 'workflow_dispatch'
     timeout-minutes: 5
     runs-on: ubuntu-latest
     environment: test-env-ecommerce
