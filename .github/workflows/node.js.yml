@@ -4,6 +4,13 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch to run tests on'
+        required: true
+        default: 'main'
+        type: string
 
 permissions:
   contents: read
@@ -23,6 +30,8 @@ jobs:
     environment: test-env-ecommerce
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.inputs.branch || github.ref }}
       - uses: actions/setup-node@v4
         with:
           node-version: 18
