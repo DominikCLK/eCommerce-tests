@@ -2,7 +2,7 @@ import { expect, test } from '@_src/fixtures/merge.fixture';
 import { API_URL } from 'config/env.config';
 
 test.describe('Verify buying processes - products from home page', () => {
-  test('Add product and chose Buy now pay later method @logged', async ({
+  test('Add product and chose Buy now pay later method @logged @e2e', async ({
     homePage,
     request,
     productDetails,

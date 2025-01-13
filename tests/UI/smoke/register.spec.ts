@@ -2,12 +2,12 @@ import { prepareUserDataForUi } from '@_src/factories/user.factory';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 
 test.describe.configure({ mode: 'parallel' });
-test.describe('Verify register @smoke-UI', () => {
+test.describe('Verify register @smoke-ui', () => {
   test.beforeEach(async ({ registerPage }) => {
     await registerPage.goto();
   });
 
-  test('Verify successful registration @UI-S-ECTS-R01-01 @UI-S-ECTS-R01-02', async ({
+  test('Verify successful registration', async ({
     registerPage,
     loginPage,
     page,
