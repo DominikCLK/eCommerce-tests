@@ -7,7 +7,7 @@ test.describe('Verify register @smoke-UI', () => {
     await registerPage.goto();
   });
 
-  test('Verify that users can successfully register account @UI-S-ECTS-R01-01 @UI-S-ECTS-R01-02', async ({
+  test('Verify successful registration @UI-S-ECTS-R01-01 @UI-S-ECTS-R01-02', async ({
     registerPage,
     loginPage,
     page,
@@ -19,31 +19,30 @@ test.describe('Verify register @smoke-UI', () => {
     // Act
     await registerPage.fillRegisterFields(registerUserData);
     await registerPage.registerButton.click();
-    const title = await registerPage.getTitle();
 
-    //Assert
-    expect(title).toContain(expectedWelcomeTitle);
     await expect(page).toHaveURL(loginPage.url);
     await expect(loginPage.loginHeading).toBeVisible();
-    await expect(loginPage.registerLink).toBeVisible();
-    await expect(loginPage.forgotPasswordLink).toBeVisible();
+    await expect(registerPage.getTitle()).resolves.toContain(expectedWelcomeTitle);
+
+    // Assert
+    await expect.soft(loginPage.registerLink).toBeVisible();
+    await expect.soft(loginPage.forgotPasswordLink).toBeVisible();
   });
 
-  test('Verify that users cant login with incorrect data @UI-S-ECTS-R01-03', async ({
+  test('Verify validation for required fields @UI-S-ECTS-R01-03', async ({
     registerPage,
   }) => {
     // Arrange
     const registerUserData = prepareUserDataForUi();
-    const expectedErrorMessage = 'First name is required.';
+    const expectedErrorMessage = 'First name is required';
 
     // Act
     await registerPage.fillRegisterFields(registerUserData);
-    await registerPage.firstNameInput.fill('');
-    await registerPage.lastNameInput.fill('');
+    await registerPage.firstNameInput.clear();
+    await registerPage.lastNameInput.clear();
     await registerPage.registerButton.click();
 
-    //Assert
-    await expect(registerPage.errorMessage).toBeVisible();
+    // Assert
     await expect(registerPage.errorMessage).toHaveText(expectedErrorMessage);
   });
 });

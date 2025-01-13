@@ -3,7 +3,7 @@ import { BasePage } from '@_src/pages/base.page';
 import { Page } from '@playwright/test';
 
 export class LoginPage extends BasePage {
-  url = 'https://practicesoftwaretesting.com/#/auth/login';
+  url = 'auth/login';
   userEmailInput = this.page.locator('[data-test="email"]');
   userPasswordInput = this.page.locator('[data-test="password"]');
   loginButton = this.page.locator('[data-test="login-submit"]');
