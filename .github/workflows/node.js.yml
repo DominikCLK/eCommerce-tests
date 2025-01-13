@@ -16,6 +16,7 @@ on:
           - smoke-ui
           - logged
           - e2e
+          - all
 
 permissions:
   contents: read
@@ -194,7 +195,12 @@ jobs:
             node_modules
           key: node_modules-${{ hashFiles('package-lock.json') }}
       - name: Run tagged tests
-        run: npx playwright test --grep "@${{ inputs.test_tag }}"
+        run: |
+          if [ "${{ inputs.test_tag }}" = "all" ]; then
+            npm run test:all
+          else
+            npx playwright test --grep "@${{ inputs.test_tag }}"
+          fi
       - name: Archive tests results
         if: success() || failure()
         uses: actions/upload-artifact@v4
