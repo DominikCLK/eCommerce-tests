@@ -1,8 +1,8 @@
 import { Page } from '@playwright/test';
 
 export class BasePage {
-  url = '';
-  constructor(protected page: Page) {}
+  protected url = '';
+  constructor(protected readonly page: Page) {}
 
   async goto(): Promise<void> {
     await this.page.goto(this.url);
@@ -13,7 +13,7 @@ export class BasePage {
   }
 
   async verifyCurrentUrl(): Promise<void> {
-    const currentUrl = this.page.url();
+    const currentUrl = await this.page.url();
 
     if (!currentUrl.includes(this.url)) {
       throw new Error(
