@@ -13,7 +13,7 @@ export class BasePage {
   }
 
   async verifyCurrentUrl(): Promise<void> {
-    const currentUrl = await this.page.url();
+    const currentUrl = this.page.url();
 
     if (!currentUrl.includes(this.url)) {
       throw new Error(
