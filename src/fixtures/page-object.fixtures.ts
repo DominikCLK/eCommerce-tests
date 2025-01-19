@@ -1,9 +1,9 @@
 import { CheckoutPage } from '@_src/pages/checkout.page';
+import { FavoritesPage } from '@_src/pages/favorites.page';
 import { HomePage } from '@_src/pages/home.page';
 import { LoginPage } from '@_src/pages/login.page';
 import { ProductDetails } from '@_src/pages/product-details.page';
 import { RegisterPage } from '@_src/pages/register.page';
-import { FavoritesPage } from '@_src/pages/favorites.page';
 import { test as baseTest } from '@playwright/test';
 
 const pageObjectTest = baseTest.extend<{

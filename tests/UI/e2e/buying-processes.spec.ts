@@ -36,12 +36,14 @@ test.describe('Verify buying processes - products from home page', () => {
     await productDetails.navbar.basket.click();
 
     // Assert
-    await expect.soft(checkoutPage.checkoutItemName(product.name)).toBeVisible();
+    await expect
+      .soft(checkoutPage.checkoutItemName(product.name))
+      .toBeVisible();
 
     // Act
     for (let step = 1; step <= 3; step++) {
       await checkoutPage.proceedButton(step.toString()).click();
-      
+
       if (step === 3) {
         await checkoutPage.buyNowPayLaterMethod('3');
       }

@@ -12,7 +12,7 @@ export class HomePage extends BasePage {
   constructor(page: Page) {
     super(page);
   }
-  
+
   productToBuy(id: string): Locator {
     return this.page.locator(`[data-test="product-${id}"]`);
   }

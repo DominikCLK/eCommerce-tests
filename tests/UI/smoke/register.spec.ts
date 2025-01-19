@@ -22,7 +22,9 @@ test.describe('Verify register @smoke-ui', () => {
 
     await expect(page).toHaveURL(loginPage.url);
     await expect(loginPage.loginHeading).toBeVisible();
-    await expect(registerPage.getTitle()).resolves.toContain(expectedWelcomeTitle);
+    await expect(registerPage.getTitle()).resolves.toContain(
+      expectedWelcomeTitle,
+    );
 
     // Assert
     await expect.soft(loginPage.registerLink).toBeVisible();

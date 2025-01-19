@@ -23,7 +23,10 @@ test.describe('Register new user and login to portal @API-integration', () => {
 
   test('POST register new user @API-I-ECTS-R03-01', async ({ request }) => {
     // Act
-    const { url, options } = buildRequestData(APIEndpoints.REGISTER_ENDPOINT, registerUserDataApi);
+    const { url, options } = buildRequestData(
+      APIEndpoints.REGISTER_ENDPOINT,
+      registerUserDataApi,
+    );
     const registerNewUserResponse = await request.post(url, options);
 
     const registerNewUserResponseJson = await parseResponseAndCheckStatus(
@@ -44,8 +47,11 @@ test.describe('Register new user and login to portal @API-integration', () => {
       email: registerUserDataApi.email,
       password: registerUserDataApi.password,
     };
-    
-    const { url, options } = buildRequestData(APIEndpoints.LOGIN_ENDPOINT, loginData);
+
+    const { url, options } = buildRequestData(
+      APIEndpoints.LOGIN_ENDPOINT,
+      loginData,
+    );
     const newUserLoginResponse = await request.post(url, options);
 
     const newUserLoginResponseJson = await parseResponseAndCheckStatus(
@@ -62,7 +68,11 @@ test.describe('Register new user and login to portal @API-integration', () => {
 
   test('GET verify new user @API-I-ECTS-R03-03', async ({ request }) => {
     // Act
-    const { url, options } = buildRequestData(APIEndpoints.USER_ENDPOINT, null, accessToken);
+    const { url, options } = buildRequestData(
+      APIEndpoints.USER_ENDPOINT,
+      null,
+      accessToken,
+    );
     const userResponse = await request.get(url, options);
     const userResponseJson = await parseResponseAndCheckStatus(
       userResponse,

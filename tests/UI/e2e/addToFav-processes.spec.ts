@@ -6,7 +6,7 @@ test.describe('Verify adding to favorites processes - products from home page', 
     homePage,
     request,
     productDetails,
-    favoritesPage
+    favoritesPage,
   }) => {
     // Arrange
     const getProductData = async () => {
