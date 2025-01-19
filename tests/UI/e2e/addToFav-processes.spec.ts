@@ -1,4 +1,5 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
+import { Product } from '@_src/models/products.model';
 import { API_URL } from 'config/env.config';
 
 test.describe('Verify adding to favorites processes - products from home page', () => {
@@ -7,9 +8,9 @@ test.describe('Verify adding to favorites processes - products from home page', 
     request,
     productDetails,
     favoritesPage,
-  }) => {
+  }): Promise<void> => {
     // Arrange
-    const getProductData = async () => {
+    const getProductData = async (): Promise<Product> => {
       const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
       const productResponse = await request.get(productsUrl);
       const { data } = await productResponse.json();
