@@ -5,8 +5,6 @@ import { API_URL } from 'config/env.config';
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
-
-
 test.describe.configure({ mode: 'serial' });
 test.describe('Basket operations integration tests @API-integration', () => {
   const expectedAddItemResponse = 'item added or updated';
