@@ -1,23 +1,15 @@
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { Product } from '@_src/models/products.model';
-import { API_URL } from 'config/env.config';
+import { getProductData } from '@_src/utils/api.util';
 
 test.describe('Verify adding to favorites processes - products from home page', () => {
-  test('Add product to favorite and verify if product is there @logged @e2e', async ({
+  test('Add product to favorite and verify if product is there then remove product from list @logged @e2e', async ({
     homePage,
     request,
     productDetails,
     favoritesPage,
   }): Promise<void> => {
     // Arrange
-    const getProductData = async (): Promise<Product> => {
-      const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
-      const productResponse = await request.get(productsUrl);
-      const { data } = await productResponse.json();
-      return data[0];
-    };
-
-    const product = await getProductData();
+    const product = await getProductData(request);
 
     // Act
     await homePage.goto();
@@ -41,5 +33,13 @@ test.describe('Verify adding to favorites processes - products from home page', 
     // Assert
     await expect(favoritesPage.getFavItem(product.id)).toBeVisible();
     await expect(favoritesPage.productName).toHaveText(product.name);
+
+    await test.step('Remove product from fav list', async () => {
+      // Act
+      await favoritesPage.removeFavorites();
+      // Assert
+      await expect(favoritesPage.getFavItem(product.id)).not.toBeVisible();
+      await expect(favoritesPage.noFavDescription).toBeVisible();
+    });
   });
 });
