@@ -1,3 +1,4 @@
+import { NavbarComponent } from '@_src/components/navbar.component';
 import { CheckoutPage } from '@_src/pages/checkout.page';
 import { FavoritesPage } from '@_src/pages/favorites.page';
 import { HomePage } from '@_src/pages/home.page';
@@ -13,6 +14,7 @@ const pageObjectTest = baseTest.extend<{
   productDetails: ProductDetails;
   checkoutPage: CheckoutPage;
   favoritesPage: FavoritesPage;
+  navbarComponent: NavbarComponent;
 }>({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
@@ -42,6 +44,11 @@ const pageObjectTest = baseTest.extend<{
   favoritesPage: async ({ page }, use) => {
     const favoritesPage = new FavoritesPage(page);
     await use(favoritesPage);
+  },
+
+  navbarComponent: async ({ page }, use) => {
+    const navbarComponent = new NavbarComponent(page);
+    await use(navbarComponent);
   },
 });
 
