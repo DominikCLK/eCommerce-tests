@@ -10,7 +10,6 @@ import {
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
-// Dodanie pomocniczej funkcji do weryfikacji danych użytkownika
 const verifyUserData = (userResponseJson: any, expectedData: any) => {
   const {
     first_name: userFirstName,
@@ -29,7 +28,6 @@ const verifyUserData = (userResponseJson: any, expectedData: any) => {
   expect(userDob).toBe(expectedData.jsonDob);
 };
 
-// Dodanie pomocniczej funkcji do wykonywania requestów
 const makeRequest = async (request: any, options: any) => {
   try {
     const response = await request[options.method](options.url, options.config);

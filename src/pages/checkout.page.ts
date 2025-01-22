@@ -24,7 +24,7 @@ export class CheckoutPage extends BasePage {
   monthlyInstallments = this.page.locator('[data-test="monthly_installments"]');
 
   confirmButton = this.page.locator('[data-test="finish"]');
-  orderConfirmation = this.page.locator('#order-confirmation')
+  orderConfirmation = this.page.locator('#order-confirmation');
 
   constructor(page: Page) {
     super(page);

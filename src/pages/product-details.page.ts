@@ -12,11 +12,18 @@ export class ProductDetails extends BasePage {
   addToFavButton = this.page.locator('[data-test="add-to-favorites"]');
   unauthorizedPopup = this.page.getByText('Unauthorized, can not add');
   productAddedPopup = this.page.getByText('Product added to shopping cart.');
+  productAddedToFavPopup = this.page.getByText(
+    'Product added to your favorites list. ',
+  );
   quantity = this.page.locator('[data-test="quantity"]');
 
   navbar = new NavbarComponent(this.page);
 
   constructor(page: Page) {
     super(page);
+  }
+
+  async addToFavorites(): Promise<void> {
+    await this.addToFavButton.click();
   }
 }

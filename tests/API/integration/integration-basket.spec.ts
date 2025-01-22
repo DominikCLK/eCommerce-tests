@@ -13,13 +13,23 @@ test.describe('Basket operations integration tests @API-integration', () => {
 
   test.beforeAll(async ({ request }) => {
     // Get product ID
-    const productResponse = await request.get(buildUrl(APIEndpoints.PRODUCTS_ENDPOINT));
-    const responseProductJson = await parseResponseAndCheckStatus(productResponse, 200);
+    const productResponse = await request.get(
+      buildUrl(APIEndpoints.PRODUCTS_ENDPOINT),
+    );
+    const responseProductJson = await parseResponseAndCheckStatus(
+      productResponse,
+      200,
+    );
     productId = responseProductJson.data[0].id;
 
     // Create basket
-    const basketResponse = await request.post(buildUrl(APIEndpoints.BASKET_ENDPOINT));
-    const responseBasketJson = await parseResponseAndCheckStatus(basketResponse, 201);
+    const basketResponse = await request.post(
+      buildUrl(APIEndpoints.BASKET_ENDPOINT),
+    );
+    const responseBasketJson = await parseResponseAndCheckStatus(
+      basketResponse,
+      201,
+    );
     basketId = responseBasketJson.id;
   });
 
