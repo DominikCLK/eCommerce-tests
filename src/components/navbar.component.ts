@@ -13,8 +13,8 @@ export class NavbarComponent {
   async selectTab(navbarTab: string): Promise<void> {
     await this.getNavbarTab(navbarTab).click();
   }
-  async selectCategoriesTab(categories: string): Promise<void> {
-    await this.categoriesTab.click();
-    await this.getNavbarTab(categories).click();
+  async selectSubTab(tab: string, subTab: string): Promise<void> {
+    await this.getNavbarTab(tab).click();
+    await this.getNavbarTab(subTab).click();
   }
 }
