@@ -1,16 +1,16 @@
 import {
-  accountTabsTestCases,
-  categoriesTabsTestCases,
-  navbarTabsTestCases,
+  accountTabsTestCases, categoriesTabsTestCases, navbarTabsTestCases,
 } from '@_src/factories/testCases/navbarTestCases';
 import { expect, test } from '@_src/fixtures/merge.fixture';
+import { AccountTabTestCase, CategoriesTabTestCase, NavbarTabTestCase } from '@_src/models/navbarLocators.model';
 
 test.describe('Navbar smoke tests for non logged and logged users', () => {
   test.beforeEach(async ({ homePage }) => {
     await homePage.goto();
   });
 
-  for (const { navbarTab, url } of navbarTabsTestCases) {
+  const navbarTabsTestCasesTyped: NavbarTabTestCase[] = navbarTabsTestCases;
+  navbarTabsTestCasesTyped.forEach(({ navbarTab, url }) => {
     test(`Verify if ${navbarTab} redirect to correct page`, async ({
       navbarComponent,
       page,
@@ -21,24 +21,28 @@ test.describe('Navbar smoke tests for non logged and logged users', () => {
       // Assert
       await expect(page).toHaveURL(url);
     });
-  }
+  });
 
-  for (const { categories, url } of categoriesTabsTestCases) {
+  const categoriesTabsTestCasesTyped: CategoriesTabTestCase[] =
+    categoriesTabsTestCases;
+  categoriesTabsTestCasesTyped.forEach(({ categories, url }) => {
     test(`Verify if ${categories} redirect to correct page`, async ({
       navbarComponent,
       page,
     }) => {
       // Arrange
       const tab = 'categories';
+
       // Act
       await navbarComponent.selectSubTab(tab, categories);
 
       // Assert
       await expect(page).toHaveURL(url);
     });
-  }
+  });
 
-  for (const { accountTab, url } of accountTabsTestCases) {
+  const accountTabsTestCasesTyped: AccountTabTestCase[] = accountTabsTestCases;
+  accountTabsTestCasesTyped.forEach(({ accountTab, url }) => {
     test(`Verify if ${accountTab} redirect to correct page @logged @smoke-ui`, async ({
       navbarComponent,
       page,
@@ -52,5 +56,5 @@ test.describe('Navbar smoke tests for non logged and logged users', () => {
       // Assert
       await expect(page).toHaveURL(url);
     });
-  }
+  });
 });
