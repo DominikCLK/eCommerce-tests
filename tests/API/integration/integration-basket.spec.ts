@@ -14,7 +14,7 @@ test.describe('Basket operations integration tests @API-integration', () => {
   test.beforeAll(async ({ request }) => {
     // Get product ID
     const productResponse = await request.get(
-      buildUrl(APIEndpoints.PRODUCTS_ENDPOINT),
+      buildUrl(APIEndpoints.ALL_PRODUCTS_ENDPOINT),
     );
     const responseProductJson = await parseResponseAndCheckStatus(
       productResponse,
@@ -41,7 +41,7 @@ test.describe('Basket operations integration tests @API-integration', () => {
   });
 
   test('POST add product to basket @API-I-ECTS-R04-03', async ({ request }) => {
-    // Act
+    // Act:
     const addProductResponse = await request.post(
       `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}`,
       {
@@ -58,12 +58,12 @@ test.describe('Basket operations integration tests @API-integration', () => {
     );
     const responseMessage = addProductResponseJson.result;
 
-    // Assert
+    // Assert:
     expect(responseMessage).toBe(expectedAddItemResponse);
   });
 
   test('GET product in basket @API-I-ECTS-R04-04', async ({ request }) => {
-    // Act
+    // Act:
     const getProductResponse = await request.get(
       `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}`,
     );
@@ -74,24 +74,24 @@ test.describe('Basket operations integration tests @API-integration', () => {
     );
     const productIdInBasket = getProductResponseJson.cart_items[0].product.id;
 
-    // Assert
+    // Assert:
     expect(productIdInBasket).toBe(productId);
   });
 
   test('DELETE remove product from basket @@API-I-ECTS-R04-05', async ({
     request,
   }) => {
-    // Act
+    // Act:
     const removeProductResponse = await request.delete(
       `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}/product/${productId}`,
     );
 
-    // Assert
+    // Assert:
     expect(removeProductResponse.status()).toBe(204);
   });
 
   test('GET verify empty basket @API-I-ECTS-R04-05', async ({ request }) => {
-    // Act
+    // Act:
     const getProductResponse = await request.get(
       `${buildUrl(APIEndpoints.BASKET_ENDPOINT)}/${basketId}`,
     );
@@ -101,7 +101,7 @@ test.describe('Basket operations integration tests @API-integration', () => {
     );
     const cartItems = emptyBasketJson.cart_items;
 
-    // Assert
+    // Assert:
     expect(cartItems.length).toBe(0);
   });
 });

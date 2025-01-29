@@ -16,6 +16,12 @@ export class ProductDetails extends BasePage {
     'Product added to your favorites list. ',
   );
   quantity = this.page.locator('[data-test="quantity"]');
+  addToCartButton = this.page.locator('button[data-test="add-to-cart"]');
+  increaseQuantityButton = this.page.locator(
+    'button[data-test="increase-quantity"]',
+  );
+  outOfStock = this.page.locator('p[data-test="out-of-stock"]');
+  durationElement = this.page.locator('#duration');
 
   navbar = new NavbarComponent(this.page);
 

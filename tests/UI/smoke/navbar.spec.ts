@@ -1,8 +1,14 @@
 import {
-  accountTabsTestCases, categoriesTabsTestCases, navbarTabsTestCases,
+  accountTabsTestCases,
+  categoriesTabsTestCases,
+  navbarTabsTestCases,
 } from '@_src/factories/testCases/navbarTestCases';
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { AccountTabTestCase, CategoriesTabTestCase, NavbarTabTestCase } from '@_src/models/navbarLocators.model';
+import {
+  AccountTabTestCase,
+  CategoriesTabTestCase,
+  NavbarTabTestCase,
+} from '@_src/models/navbarLocators.model';
 
 test.describe('Navbar smoke tests for non logged and logged users', () => {
   test.beforeEach(async ({ homePage }) => {
@@ -15,10 +21,10 @@ test.describe('Navbar smoke tests for non logged and logged users', () => {
       navbarComponent,
       page,
     }) => {
-      // Act
+      // Act:
       await navbarComponent.selectTab(navbarTab);
 
-      // Assert
+      // Assert:
       await expect(page).toHaveURL(url);
     });
   });
@@ -30,13 +36,13 @@ test.describe('Navbar smoke tests for non logged and logged users', () => {
       navbarComponent,
       page,
     }) => {
-      // Arrange
+      // Arrange:
       const tab = 'categories';
 
-      // Act
+      // Act:
       await navbarComponent.selectSubTab(tab, categories);
 
-      // Assert
+      // Assert:
       await expect(page).toHaveURL(url);
     });
   });
@@ -47,13 +53,13 @@ test.describe('Navbar smoke tests for non logged and logged users', () => {
       navbarComponent,
       page,
     }) => {
-      // Arrange
+      // Arrange:
       const tab = 'menu';
 
-      // Act
+      // Act:
       await navbarComponent.selectSubTab(tab, accountTab);
 
-      // Assert
+      // Assert:
       await expect(page).toHaveURL(url);
     });
   });

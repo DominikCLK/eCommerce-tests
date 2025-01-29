@@ -9,7 +9,7 @@ test.describe('Verify buying processes - products from home page', () => {
     productDetails,
     checkoutPage,
   }) => {
-    // Arrange
+    // Arrange:
     const getProductData = async (): Promise<Product> => {
       const productsUrl = `${API_URL}/products?between=price,1,100&page=1`;
       const productResponse = await request.get(productsUrl);
@@ -20,40 +20,40 @@ test.describe('Verify buying processes - products from home page', () => {
     const product = await getProductData();
     const successfulMessage = 'Payment was successful';
 
-    // Act
+    // Act:
     await homePage.goto();
     await homePage.productToBuy(product.id).click();
 
-    // Assert
+    // Assert:
     await expect(productDetails.productName).toHaveText(product.name);
     await expect(productDetails.category).toHaveText(product.category.name);
     await expect(productDetails.brand).toHaveText(product.brand.name);
     await expect(productDetails.description).toHaveText(product.description);
 
-    // Act
+    // Act:
     await productDetails.addToBasketButton.click();
     await expect(productDetails.productAddedPopup).toBeInViewport();
     await productDetails.productAddedPopup.click();
     await productDetails.navbar.basket.click();
 
-    // Assert
+    // Assert:
     await expect
       .soft(checkoutPage.checkoutItemName(product.name))
       .toBeVisible();
 
-    // Act - Checkout process
+    // Act: - Checkout process
     await checkoutPage.proceedButton('1').click();
     await checkoutPage.proceedButton('2').click();
     await checkoutPage.proceedButton('3').click();
     await checkoutPage.buyNowPayLaterMethod('3');
 
-    // Assert
+    // Assert:
     await expect(checkoutPage.paymentMessage(successfulMessage)).toBeVisible();
 
-    // Act
+    // Act:
     await checkoutPage.confirmButton.click();
 
-    // Assert
+    // Assert:
     await expect(checkoutPage.orderConfirmation).toBeVisible();
   });
 });
