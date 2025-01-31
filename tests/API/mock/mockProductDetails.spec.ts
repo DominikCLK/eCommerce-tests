@@ -65,4 +65,21 @@ test.describe('Mock product details page', () => {
     // Assert
     await expect(productDetails.description).toBeHidden();
   });
+
+  test('Check if brand and category value is not visible when id is invalid', async ({
+    page,
+    productDetails,
+  }) => {
+    // Arrange
+    await page.route(`${API_URL}/products/${productId}`, (route) =>
+      mockProductResponse(route, { category: { id: '1' }, brand: { id: '1' } }),
+    );
+
+    // Act
+    await navigateToProductPage(page, productId);
+
+    // Assert
+    await expect(productDetails.brand).not.toHaveText('ForgeFlex Tools');
+    await expect(productDetails.category).not.toHaveText('PliersForgeFlex');
+  });
 });
