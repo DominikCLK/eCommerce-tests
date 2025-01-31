@@ -1,6 +1,6 @@
 import { NavbarComponent } from '@_src/components/navbar.component';
 import { BasePage } from '@_src/pages/base.page';
-import { Page } from '@playwright/test';
+import { Page, expect } from '@playwright/test';
 
 export class ProductDetails extends BasePage {
   productName = this.page.locator('[data-test="product-name"]');
@@ -22,6 +22,7 @@ export class ProductDetails extends BasePage {
   );
   outOfStock = this.page.locator('p[data-test="out-of-stock"]');
   durationElement = this.page.locator('#duration');
+  relatedProducts = this.page.locator('.col .container');
 
   navbar = new NavbarComponent(this.page);
 
@@ -31,5 +32,24 @@ export class ProductDetails extends BasePage {
 
   async addToFavorites(): Promise<void> {
     await this.addToFavButton.click();
+  }
+
+  loadLocators = [
+    this.productName,
+    this.category,
+    this.brand,
+    this.price,
+    this.description,
+    this.addToBasketButton,
+    this.addToFavButton,
+    this.quantity,
+    this.addToCartButton,
+    this.increaseQuantityButton,
+  ];
+
+  async verifyAllLocatorsAreHidden(): Promise<void> {
+    await Promise.all(
+      this.loadLocators.map((locator) => expect(locator).not.toBeVisible()),
+    );
   }
 }

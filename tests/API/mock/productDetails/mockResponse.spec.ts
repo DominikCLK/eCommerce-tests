@@ -14,6 +14,10 @@ test.describe('Mock product details page', () => {
     productId = product.id;
   });
 
+  test.afterEach(async ({ page }) => {
+    await page.unroute(`${API_URL}/products/${productId}`);
+  });
+
   test('Check if out of stock info is visible', async ({
     page,
     productDetails,
