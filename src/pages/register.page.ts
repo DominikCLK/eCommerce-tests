@@ -9,8 +9,8 @@ export class RegisterPage extends BasePage {
   firstNameInput = this.page.locator('[data-test="first-name"]');
   lastNameInput = this.page.locator('[data-test="last-name"]');
   birthDateInput = this.page.locator('[data-test="dob"]');
-  addressInput = this.page.locator('[data-test="address"]');
-  postCodeInput = this.page.locator('[data-test="postcode"]');
+  streetInput = this.page.locator('[data-test="street"]');
+  postCodeInput = this.page.locator('[data-test="postal_code"]');
   cityInput = this.page.locator('[data-test="city"]');
   stateInput = this.page.locator('[data-test="state"]');
   countrySelect = this.page.locator('[data-test="country"]');
@@ -30,7 +30,7 @@ export class RegisterPage extends BasePage {
     await this.firstNameInput.fill(registerUserData.userFirstName);
     await this.lastNameInput.fill(registerUserData.userLastName);
     await this.birthDateInput.fill(registerUserData.userBirthDate);
-    await this.addressInput.fill(registerUserData.userAddress);
+    await this.streetInput.fill(registerUserData.userAddress);
     await this.postCodeInput.fill(registerUserData.userPostcode);
     await this.cityInput.fill(registerUserData.userCity);
     await this.stateInput.fill(registerUserData.userState);
