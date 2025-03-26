@@ -16,15 +16,46 @@ export interface RegisterUserModel {
 }
 
 export interface RegisterApiUserModel {
-  address: string;
-  city: string;
-  country: string;
-  dob: string;
-  email: string;
   first_name: string;
   last_name: string;
+  email: string;
   password: string;
   phone: string;
-  postcode: string;
-  state: string;
+  dob: string;
+  address: {
+    street: string;
+    city: string;
+    state: string;
+    country: string;
+    postal_code: string;
+  };
+}
+
+export interface UserAddress {
+  street: string;
+  city: string;
+  country: string;
+  postal_code: string | null;
+  state: string | null;
+}
+
+export interface UserResponse {
+  first_name: string;
+  last_name: string;
+  address: UserAddress;
+  dob: string;
+}
+
+export interface ExpectedUserData {
+  jsonUserFirstName: string;
+  jsonLastName: string;
+  jsonAddress: string;
+  jsonCity: string;
+  jsonCountry: string;
+  jsonDob: string;
+}
+
+export interface LoginResponse {
+  access_token: string;
+  token_type: string;
 }
