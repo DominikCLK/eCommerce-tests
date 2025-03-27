@@ -9,9 +9,17 @@ const navigateToProductPage = async (page, productId: string) => {
 test.describe('Mock product details page', () => {
   let productId: string;
 
-  test.beforeEach(async ({ request }) => {
+  test.beforeEach(async ({ request, page }) => {
     const product = await getProductData(request);
     productId = product.id;
+    
+    await page.route(`${API_URL}/products/${productId}`, (route) =>
+      mockProductResponse(route, { description: undefined })
+    );
+  });
+
+  test.afterEach(async ({ page }) => {
+    await page.unroute(`${API_URL}/products/${productId}`);
   });
 
   test.afterEach(async ({ page }) => {
@@ -58,11 +66,6 @@ test.describe('Mock product details page', () => {
     page,
     productDetails,
   }) => {
-    // Arrange
-    await page.route(`${API_URL}/products/${productId}`, (route) =>
-      mockProductResponse(route, { description: undefined }),
-    );
-
     // Act
     await navigateToProductPage(page, productId);
 
