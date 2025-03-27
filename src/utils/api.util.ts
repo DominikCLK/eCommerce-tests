@@ -1,5 +1,5 @@
 import { Product } from '@_src/models/products.model';
-import { expect } from '@playwright/test';
+import { Route, expect } from '@playwright/test';
 import { API_URL } from 'config/env.config';
 
 export async function parseResponseAndCheckStatus(
@@ -23,3 +23,20 @@ export async function getProductData(request): Promise<Product> {
   }
   return data[0];
 }
+
+export const mockProductResponse = async (
+  route: Route,
+  modifications: Record<string, unknown>,
+) => {
+  try {
+    const response = await route.fetch();
+    const json = await response.json();
+    await route.fulfill({ json: { ...json, ...modifications } });
+  } catch (error) {
+    if (error.message.includes('Target page, context or browser has been closed')) {
+      await route.fulfill({ json: modifications });
+    } else {
+      throw error;
+    }
+  }
+};
