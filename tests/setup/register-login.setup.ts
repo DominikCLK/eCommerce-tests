@@ -13,7 +13,7 @@ setup.describe('Register, login to app and save session', () => {
 
   setup(
     'Register new user @setup',
-    async ({ registerPage, loginPage, page }) => {
+    async ({ registerPage, loginPage, accountPage, page }) => {
       // Arrange
       const expectedWelcomeTitle =
         'Practice Software Testing - Toolshop - v5.0';
@@ -36,9 +36,9 @@ setup.describe('Register, login to app and save session', () => {
         await loginPage.login(registerUserData);
 
         //Assert
-        await expect(page.locator('[data-test="page-title"]')).toContainText(
-          loggedHeading,
-        );
+        await expect(accountPage.myAccountTitle).toBeVisible();
+
+        await expect(accountPage.myAccountTitle).toContainText(loggedHeading);
 
         await page.context().storageState({ path: STORAGE_STATE });
       });

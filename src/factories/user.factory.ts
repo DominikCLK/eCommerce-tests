@@ -1,6 +1,6 @@
 import {
-    RegisterApiUserModel,
-    RegisterUserModel,
+  RegisterApiUserModel,
+  RegisterUserModel,
 } from '@_src/models/user.model';
 import { fakerPL } from '@faker-js/faker';
 import { faker } from '@faker-js/faker/locale/pl';

@@ -1,8 +1,14 @@
 import {
-  accountTabsTestCases, categoriesTabsTestCases, navbarTabsTestCases,
+  accountTabsTestCases,
+  categoriesTabsTestCases,
+  navbarTabsTestCases,
 } from '@_src/factories/testCases/navbarTestCases';
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { AccountTabTestCase, CategoriesTabTestCase, NavbarTabTestCase } from '@_src/models/navbarLocators.model';
+import {
+  AccountTabTestCase,
+  CategoriesTabTestCase,
+  NavbarTabTestCase,
+} from '@_src/models/navbarLocators.model';
 
 test.describe('Navbar smoke tests for non logged and logged users', () => {
   test.beforeEach(async ({ homePage }) => {

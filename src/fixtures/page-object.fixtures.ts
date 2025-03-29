@@ -1,4 +1,5 @@
 import { NavbarComponent } from '@_src/components/navbar.component';
+import { AccountPage } from '@_src/pages/account.page';
 import { CheckoutPage } from '@_src/pages/checkout.page';
 import { FavoritesPage } from '@_src/pages/favorites.page';
 import { HomePage } from '@_src/pages/home.page';
@@ -15,6 +16,7 @@ const pageObjectTest = baseTest.extend<{
   checkoutPage: CheckoutPage;
   favoritesPage: FavoritesPage;
   navbarComponent: NavbarComponent;
+  accountPage: AccountPage;
 }>({
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
@@ -49,6 +51,11 @@ const pageObjectTest = baseTest.extend<{
   navbarComponent: async ({ page }, use) => {
     const navbarComponent = new NavbarComponent(page);
     await use(navbarComponent);
+  },
+
+  accountPage: async ({ page }, use) => {
+    const accountPage = new AccountPage(page);
+    await use(accountPage);
   },
 });
 

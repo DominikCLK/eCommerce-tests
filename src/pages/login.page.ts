@@ -1,5 +1,6 @@
 import { RegisterUserModel } from '@_src/models/user.model';
 import { BasePage } from '@_src/pages/base.page';
+import { DEFAULT_USER_EMAIL, DEFAULT_USER_PASSWORD } from '@config/env.config';
 import { Page } from '@playwright/test';
 
 export class LoginPage extends BasePage {
@@ -11,6 +12,7 @@ export class LoginPage extends BasePage {
   registerLink = this.page.locator('[data-test="register-link"]');
   forgotPasswordLink = this.page.locator('[data-test="forgot-password-link"]');
   button = this.page.getByTestId('article-title');
+  loginErrorMessage = this.page.locator('text=Invalid email or password');
 
   constructor(page: Page) {
     super(page);
@@ -25,5 +27,11 @@ export class LoginPage extends BasePage {
     if (!isButtonDisabled) {
       await this.loginButton.click();
     }
+  }
+
+  async loginAsDefault(login: string, password: string): Promise<void> {
+    await this.userEmailInput.fill(login);
+    await this.userPasswordInput.fill(password);
+    await this.loginButton.click();
   }
 }

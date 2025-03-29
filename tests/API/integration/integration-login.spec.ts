@@ -1,7 +1,11 @@
 import { APIEndpoints } from '@_src/enums/endpoints.dicts';
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { RequestOptions } from '@_src/models/requests.model';
-import { ExpectedUserData, LoginResponse, UserResponse } from '@_src/models/user.model';
+import {
+  ExpectedUserData,
+  LoginResponse,
+  UserResponse,
+} from '@_src/models/user.model';
 import userDataJsonObject from '@_src/test-data/user.data.json';
 import { parseResponseAndCheckStatus } from '@_src/utils/api.util';
 import {
@@ -12,7 +16,10 @@ import {
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
-const verifyUserData = (userResponseJson: UserResponse, expectedData: ExpectedUserData): void => {
+const verifyUserData = (
+  userResponseJson: UserResponse,
+  expectedData: ExpectedUserData,
+): void => {
   const {
     first_name: userFirstName,
     last_name: userLastName,
@@ -28,7 +35,10 @@ const verifyUserData = (userResponseJson: UserResponse, expectedData: ExpectedUs
   expect(userDob).toBe(expectedData.jsonDob);
 };
 
-const makeRequest = async <T>(request: any, options: RequestOptions): Promise<T> => {
+const makeRequest = async <T>(
+  request: any,
+  options: RequestOptions,
+): Promise<T> => {
   try {
     const response = await request[options.method](options.url, options.config);
     return await parseResponseAndCheckStatus(response, options.expectedStatus);
@@ -77,6 +87,9 @@ test.describe('Login to portal and verify user @API-integration', () => {
       errorMessage: 'User verification failed',
     });
 
-    verifyUserData(userResponseJson, userDataJsonObject.userDefaultAccountData as ExpectedUserData);
+    verifyUserData(
+      userResponseJson,
+      userDataJsonObject.userDefaultAccountData as ExpectedUserData,
+    );
   });
 });

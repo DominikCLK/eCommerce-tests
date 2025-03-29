@@ -12,9 +12,9 @@ test.describe('Mock product details page', () => {
   test.beforeEach(async ({ request, page }) => {
     const product = await getProductData(request);
     productId = product.id;
-    
+
     await page.route(`${API_URL}/products/${productId}`, (route) =>
-      mockProductResponse(route, { description: undefined })
+      mockProductResponse(route, { description: undefined }),
     );
   });
 

@@ -1,4 +1,3 @@
-
 import { expect, test } from '@_src/fixtures/merge.fixture';
 import { getProductData } from '@_src/utils/api.util';
 import { API_URL, BASE_URL } from 'config/env.config';

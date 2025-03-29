@@ -33,7 +33,9 @@ export const mockProductResponse = async (
     const json = await response.json();
     await route.fulfill({ json: { ...json, ...modifications } });
   } catch (error) {
-    if (error.message.includes('Target page, context or browser has been closed')) {
+    if (
+      error.message.includes('Target page, context or browser has been closed')
+    ) {
       await route.fulfill({ json: modifications });
     } else {
       throw error;
