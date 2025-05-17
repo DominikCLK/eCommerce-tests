@@ -36,4 +36,3 @@ export const mockProductResponse = async (
     await route.abort();
   }
 };
-

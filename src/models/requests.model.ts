@@ -1,11 +1,23 @@
-export interface RequestOptions {
-  data?: Record<string, unknown>;
-  headers?: {
-    Authorization: string;
+export interface RequestData {
+  url: string;
+  options: {
+    data?: Record<string, unknown>;
+    headers?: { Authorization: string };
   };
 }
 
-export interface RequestData {
+export interface RequestOptions {
+  method: string;
   url: string;
-  options: RequestOptions;
+  config: {
+    data?: {
+      email?: string;
+      password?: string;
+    };
+    headers?: {
+      Authorization?: string;
+    };
+  };
+  expectedStatus: number;
+  errorMessage: string;
 }
