@@ -14,9 +14,9 @@ test.describe('Mock product details page', () => {
     productId = product.id;
   });
 
-  test.afterEach(async ({ page }) => {
-    await page.unroute(`${API_URL}/products/${productId}`);
-  });
+test.afterEach(async ({ page }) => {
+  await page.unrouteAll({ behavior: 'ignoreErrors' });
+});
 
   test('Check if out of stock info is visible', async ({
     page,
@@ -68,6 +68,7 @@ test.describe('Mock product details page', () => {
 
     // Assert
     await expect(productDetails.description).toBeHidden();
+    await page.unrouteAll({ behavior: 'ignoreErrors' });
   });
 
   test('Check if brand and category value is not visible when id is invalid', async ({

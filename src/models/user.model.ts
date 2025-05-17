@@ -14,11 +14,16 @@ export interface RegisterUserModel {
   userEmail: string;
   userPassword: string;
 }
-
-export interface RegisterApiUserModel {
-  address: string;
+export interface Address {
+  street: string;
   city: string;
   country: string;
+  postal_code?: string | null;
+  state?: string | null;
+}
+
+export interface RegisterApiUserModel {
+  address: Address;
   dob: string;
   email: string;
   first_name: string;
@@ -27,4 +32,13 @@ export interface RegisterApiUserModel {
   phone: string;
   postcode: string;
   state: string;
+}
+
+export interface ExpectedUserData {
+  jsonUserFirstName: string;
+  jsonLastName: string;
+  jsonDob: string;
+  jsonAddress: string;
+  jsonCity: string;
+  jsonCountry: string;
 }

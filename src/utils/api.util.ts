@@ -23,12 +23,17 @@ export async function getProductData(request): Promise<Product> {
   }
   return data[0];
 }
-
 export const mockProductResponse = async (
   route: Route,
   modifications: Record<string, unknown>,
 ) => {
-  const response = await route.fetch();
-  const json = await response.json();
-  await route.fulfill({ json: { ...json, ...modifications } });
+  try {
+    const response = await route.fetch();
+    const json = await response.json();
+    await route.fulfill({ json: { ...json, ...modifications } });
+  } catch (error) {
+    console.warn('Mocking failed, possibly due to closed page/context:', error.message);
+    await route.abort();
+  }
 };
+

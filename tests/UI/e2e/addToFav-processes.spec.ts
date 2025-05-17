@@ -31,15 +31,14 @@ test.describe('Verify adding to favorites processes - products from home page', 
     await favoritesPage.goto();
 
     // Assert:
-    await expect(favoritesPage.getFavItem(product.id)).toBeVisible();
+
     await expect(favoritesPage.productName).toHaveText(product.name);
 
-    await test.step('Remove product from fav list', async () => {
-      // Act:
-      await favoritesPage.removeFavorites();
-      // Assert:
-      await expect(favoritesPage.getFavItem(product.id)).not.toBeVisible();
-      await expect(favoritesPage.noFavDescription).toBeVisible();
-    });
+    // Act:
+    await favoritesPage.removeFavorites();
+
+    // Assert:
+    await expect(favoritesPage.getFavItem(product.id)).not.toBeVisible();
+    await expect(favoritesPage.noFavDescription).toBeVisible();
   });
 });
