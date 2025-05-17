@@ -14,12 +14,12 @@ setup.describe('Register, login to app and save session', () => {
   setup(
     'Register new user @setup',
     async ({ registerPage, loginPage, page }) => {
-      // Arrange
+      // Arrange:
       const expectedWelcomeTitle =
         'Practice Software Testing - Toolshop - v5.0';
       const loggedHeading = 'My account';
 
-      // Act
+      // Act:
       await registerPage.fillRegisterFields(registerUserData);
       await registerPage.registerButton.click();
       const title = await registerPage.getTitle();

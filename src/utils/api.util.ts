@@ -23,7 +23,6 @@ export async function getProductData(request): Promise<Product> {
   }
   return data[0];
 }
-
 export const mockProductResponse = async (
   route: Route,
   modifications: Record<string, unknown>,
@@ -33,10 +32,7 @@ export const mockProductResponse = async (
     const json = await response.json();
     await route.fulfill({ json: { ...json, ...modifications } });
   } catch (error) {
-    if (error.message.includes('Target page, context or browser has been closed')) {
-      await route.fulfill({ json: modifications });
-    } else {
-      throw error;
-    }
+    console.warn('Mocking failed, possibly due to closed page/context:', error.message);
+    await route.abort();
   }
 };

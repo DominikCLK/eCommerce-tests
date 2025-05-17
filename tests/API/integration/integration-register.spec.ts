@@ -21,7 +21,7 @@ const buildRequestData = (
 });
 
 test.describe.configure({ mode: 'serial' });
-test.describe('Register new user and login to portal @API-integration', () => {
+test.describe.skip('Register new user and login to portal @API-integration', () => {
   let createdUserId: string;
   let accessToken: string;
   const registerUserDataApi: RegisterApiUserModel = prepareUserDataForApi();

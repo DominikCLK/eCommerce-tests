@@ -12,11 +12,11 @@ test.describe('Verify register @smoke-ui', () => {
     loginPage,
     page,
   }) => {
-    // Arrange
+    // Arrange:
     const registerUserData = prepareUserDataForUi();
     const expectedWelcomeTitle = 'Practice Software Testing - Toolshop - v5.0';
 
-    // Act
+    // Act:
     await registerPage.fillRegisterFields(registerUserData);
     await registerPage.registerButton.click();
 
@@ -26,7 +26,7 @@ test.describe('Verify register @smoke-ui', () => {
       expectedWelcomeTitle,
     );
 
-    // Assert
+    // Assert:
     await expect.soft(loginPage.registerLink).toBeVisible();
     await expect.soft(loginPage.forgotPasswordLink).toBeVisible();
   });
@@ -34,17 +34,17 @@ test.describe('Verify register @smoke-ui', () => {
   test('Verify validation for required fields @UI-S-ECTS-R01-03', async ({
     registerPage,
   }) => {
-    // Arrange
+    // Arrange:
     const registerUserData = prepareUserDataForUi();
     const expectedErrorMessage = 'First name is required';
 
-    // Act
+    // Act:
     await registerPage.fillRegisterFields(registerUserData);
     await registerPage.firstNameInput.clear();
     await registerPage.lastNameInput.clear();
     await registerPage.registerButton.click();
 
-    // Assert
+    // Assert:
     await expect(registerPage.errorMessage).toHaveText(expectedErrorMessage);
   });
 });

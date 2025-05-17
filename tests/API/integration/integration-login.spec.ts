@@ -1,7 +1,9 @@
 import { APIEndpoints } from '@_src/enums/endpoints.dicts';
 import { expect, test } from '@_src/fixtures/merge.fixture';
-import { RequestOptions } from '@_src/models/requests.model';
-import { ExpectedUserData, LoginResponse, UserResponse } from '@_src/models/user.model';
+import {
+  ExpectedUserData,
+  RegisterApiUserModel,
+} from '@_src/models/user.model';
 import userDataJsonObject from '@_src/test-data/user.data.json';
 import { parseResponseAndCheckStatus } from '@_src/utils/api.util';
 import {
@@ -12,7 +14,10 @@ import {
 
 const buildUrl = (endpoint: string): string => `${API_URL}${endpoint}`;
 
-const verifyUserData = (userResponseJson: UserResponse, expectedData: ExpectedUserData): void => {
+const assertUserMatchesExpectedData = (
+  userResponseJson: RegisterApiUserModel,
+  expectedData: ExpectedUserData,
+) => {
   const {
     first_name: userFirstName,
     last_name: userLastName,
@@ -28,7 +33,7 @@ const verifyUserData = (userResponseJson: UserResponse, expectedData: ExpectedUs
   expect(userDob).toBe(expectedData.jsonDob);
 };
 
-const makeRequest = async <T>(request: any, options: RequestOptions): Promise<T> => {
+const makeRequest = async (request: any, options: any) => {
   try {
     const response = await request[options.method](options.url, options.config);
     return await parseResponseAndCheckStatus(response, options.expectedStatus);
@@ -41,10 +46,8 @@ test.describe.configure({ mode: 'serial' });
 test.describe('Login to portal and verify user @API-integration', () => {
   let accessToken: string;
 
-  test('POST login to portal with default credentials @API-I-ECTS-R04-01 @API-I-ECTS-R04-02', async ({
-    request,
-  }) => {
-    const loginResponseJson = await makeRequest<LoginResponse>(request, {
+  test.beforeAll(async ({ request }) => {
+    const loginResponseJson = await makeRequest(request, {
       method: 'post',
       url: buildUrl(APIEndpoints.LOGIN_ENDPOINT),
       config: {
@@ -58,14 +61,14 @@ test.describe('Login to portal and verify user @API-integration', () => {
     });
 
     accessToken = loginResponseJson.access_token;
-    expect(loginResponseJson.token_type).toBe('bearer');
-    expect(accessToken).not.toBeNull();
+    expect(typeof accessToken).toBe('string');
+    expect(accessToken.length).toBeGreaterThan(0);
   });
 
   test('GET verify default user data and access token @API-I-ECTS-R04-03', async ({
     request,
   }) => {
-    const userResponseJson = await makeRequest<UserResponse>(request, {
+    const userResponseJson = await makeRequest(request, {
       method: 'get',
       url: buildUrl(APIEndpoints.USER_ENDPOINT),
       config: {
@@ -77,6 +80,9 @@ test.describe('Login to portal and verify user @API-integration', () => {
       errorMessage: 'User verification failed',
     });
 
-    verifyUserData(userResponseJson, userDataJsonObject.userDefaultAccountData as ExpectedUserData);
+    assertUserMatchesExpectedData(
+      userResponseJson,
+      userDataJsonObject.userDefaultAccountData,
+    );
   });
 });

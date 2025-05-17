@@ -1,13 +1,18 @@
 import * as dotenv from 'dotenv';
+import * as path from 'path';
 
-dotenv.config({ override: true });
+const envPath = path.resolve(__dirname, '../../.env');
+
+dotenv.config({
+  path: envPath,
+  override: true,
+});
 
 function requireEnvVariable(envVariable: string): string {
   const envVariableValue = process.env[envVariable];
   if (envVariableValue === undefined) {
     throw new Error(`Environment variable ${envVariable} is not set.`);
   }
-
   return envVariableValue;
 }
 

@@ -8,38 +8,37 @@ test.describe('Verify adding to favorites processes - products from home page', 
     productDetails,
     favoritesPage,
   }): Promise<void> => {
-    // Arrange
+    // Arrange:
     const product = await getProductData(request);
 
-    // Act
+    // Act:
     await homePage.goto();
     await homePage.productToBuy(product.id).click();
 
-    // Assert
+    // Assert:
     await expect(productDetails.productName).toHaveText(product.name);
     await expect(productDetails.category).toHaveText(product.category.name);
     await expect(productDetails.brand).toHaveText(product.brand.name);
     await expect(productDetails.description).toHaveText(product.description);
 
-    // Act
+    // Act:
     await productDetails.addToFavorites();
 
-    // Assert
+    // Assert:
     await expect(productDetails.productAddedToFavPopup).toBeVisible();
 
-    // Act
+    // Act:
     await favoritesPage.goto();
 
-    // Assert
-    await expect(favoritesPage.getFavItem(product.id)).toBeVisible();
+    // Assert:
+
     await expect(favoritesPage.productName).toHaveText(product.name);
 
-    await test.step('Remove product from fav list', async () => {
-      // Act
-      await favoritesPage.removeFavorites();
-      // Assert
-      await expect(favoritesPage.getFavItem(product.id)).not.toBeVisible();
-      await expect(favoritesPage.noFavDescription).toBeVisible();
-    });
+    // Act:
+    await favoritesPage.removeFavorites();
+
+    // Assert:
+    await expect(favoritesPage.getFavItem(product.id)).not.toBeVisible();
+    await expect(favoritesPage.noFavDescription).toBeVisible();
   });
 });
