@@ -31,7 +31,6 @@ test.describe('Verify adding to favorites processes - products from home page', 
     await favoritesPage.goto();
 
     // Assert:
-
     await expect(favoritesPage.productName).toHaveText(product.name);
 
     // Act:
